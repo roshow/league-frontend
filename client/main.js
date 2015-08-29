@@ -1,7 +1,8 @@
 import React from 'react/addons';
-import App from './../components/home/index';
-import realsies from './../components/really';
+import Router from 'react-router';
+import routes from '../routes';
 var main = document.getElementsByTagName('main')[0];
 
-console.log(realsies.oh())
-React.render(<App />, main);
+Router.run(routes, Router.HistoryLocation, function ran (Handler, state) {
+  React.render(<Handler />, main);
+});

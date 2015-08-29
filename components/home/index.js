@@ -14,7 +14,7 @@ class FooFighter extends Foo {
     super({
       puppy: 'a lover'
     })
-    this.yourpuppy = 'a fighter'
+    this.yourpuppy = 'a fighterrr'
   }
 }
 
@@ -28,7 +28,7 @@ var littleFooFighter = new FooFighter()
 export default class HomeIndex extends React.Component {
   constructor () {
     super()
-    this.state = { n: 0 }
+    this.state = { n: this.props.n || 0 }
   }
   render () {
     return <div>
@@ -36,6 +36,10 @@ export default class HomeIndex extends React.Component {
       <h1>clicked {this.state.n} times</h1>
       <button onClick={this.handleClick.bind(this)}>click me!</button>
     </div>
+  }
+  setState (state) {
+    console.log('current state of affairs: ', state)
+    super.setState(state)
   }
   handleClick () {
     this.setState({ n: this.state.n + 1 })
