@@ -1,47 +1,31 @@
-import React from 'react'
-
-class Foo {
-  constructor (stati) {
-    this.yourpuppy = stati.puppy || 'meh'
-  }
-  getpuppyStatus () {
-    return this.yourpuppy
-  }
-}
-
-class FooFighter extends Foo {
-  constructor () {
-    super({
-      puppy: 'a lover'
-    })
-    this.yourpuppy = 'a fighterrr'
-  }
-}
-
-var littleFoo = new Foo({
-  puppy: 'scrappy'
-});
-
-var littleFooFighter = new FooFighter()
-
+import React from 'react';
+import * as players from './../services/playersCollection';
 
 export default class HomeIndex extends React.Component {
   constructor () {
-    super()
-    this.state = { n: this.props.n || 0 }
+      super();
+      console.log('constructor');
+      // console.log('players: ', players.get())
+      this.state = { n: 0 };
+      console.log('current state of affairs: ', this.state);
+  }
+  componentDidMount () {
+    this.setState({n:69});
+    console.log('I mounted');
   }
   render () {
     return <div>
-      <h3>Your puppy is: {littleFooFighter.getpuppyStatus()}</h3>
       <h1>clicked {this.state.n} times</h1>
       <button onClick={this.handleClick.bind(this)}>click me!</button>
     </div>
   }
   setState (state) {
-    console.log('current state of affairs: ', state)
-    super.setState(state)
+      // console.log(this.props)
+      // console.log('players: ', players.get());
+      // console.log('current state of affairs: ', state);
+      super.setState(state);
   }
   handleClick () {
-    this.setState({ n: this.state.n + 1 })
+      this.setState({ n: this.state.n + 1 });
   }
 }
