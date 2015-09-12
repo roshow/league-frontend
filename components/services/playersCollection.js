@@ -1,9 +1,3 @@
-import hrm from './messingAround'
-
-hrm()
-
-var i = 0
-
 const players_mockdata = [{
 	"name": "han",
 	"ships": [
@@ -29,7 +23,7 @@ const players_mockdata = [{
 			"points": 42 
 		}
 	]
-}]
+}];
 
 const amatch = [
 	{
@@ -40,15 +34,15 @@ const amatch = [
 		"id": 1,
 		"damage_taken": [10, 4]
 	}
-]
+];
 
 
 function match_points (match) {
 	let matchpoints = match.map(function ({id, damage_taken}) {
-		let ships = players_mockdata[id].ships
+		let ships = players_mockdata[id].ships;
 		let points = ships
 			.map(({damage_cap, points}, i) => Math.floor(damage_taken[i] * (points/damage_cap)))
-			.reduce((a, b) => a + b)
+			.reduce((a, b) => a + b);
 		if (points === ships.reduce(({points: a}, {points: b}) => a + b)) {
 			return 100;
 		}
@@ -57,15 +51,14 @@ function match_points (match) {
 	[matchpoints[1], matchpoints[0]] = [matchpoints[0], matchpoints[1]];
 	return matchpoints;
 }
+// console.log(match_points(amatch));
 
 // var key = 'ships'
 // var [{[key]: playerone},{[key]: playertwo}] = players_mockdata;
-// // console.log(playerone, playertwo)
+// console.log(playerone, playertwo)
 
 // var {0:zero} = players_mockdata
-// // console.log(zero)
-
-console.log(match_points(amatch));
+// console.log(zero)
 
 
 

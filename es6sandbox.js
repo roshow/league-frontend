@@ -1,8 +1,8 @@
-var dynamicKey = 'foodness';
-var newObj = {
-  [dynamicKey]: 'pizza',
-  staticKey: 'cocacola'
-}
+// var dynamicKey = 'foodness';
+// var newObj = {
+//   [dynamicKey]: 'pizza',
+//   staticKey: 'cocacola'
+// }
 // console.log(newObj)
 
 var cart = {
@@ -24,6 +24,50 @@ var cart = {
   }
 };
 
-console.log(cart.wheels);
+// console.log(cart.wheels);
+
+var obj = { a: 1 };
+var copy = Object.assign({b: 2}, obj);
+// console.log(copy); 
+// console.log(obj);
+
+class ProtoModel {
+  // defaults: { invalid: true }
+  constructor (model={}) {
+    this.attributes = Object.assign({}, this.defaults, model);
+    console.log(this);
+    this.stuff = 'invalid things';
+  }
+  
+  log () {
+    console.log(this.stuff);
+  }
+}
+
+// var pm = new ProtoModel();
+// pm.log();
+
+class Car {
+  constructor () {
+    this.topSpeed = Math.random()
+  }
+  static isFaster (left, right) {
+    return left.topSpeed > right.topSpeed
+  }
+}
+// console.log(Car.isFaster(new Car(), new Car()));
+
+{ 
+  let outer = 'I am so eccentric!'
+  {
+    let inner = 'I play with neighbors in my block and the sewers'
+    {
+      let innermost = 'I only play with neighbors in my block'
+      console.log(innermost);
+    }
+    console.log(outer);
+  }
+}
+
 
 // export default { cart };
