@@ -6,7 +6,8 @@ import ToDoIndex from './components/todo/index';
 
 export default (
   <Route path='/' handler={App}>
-    <DefaultRoute handler={HomeIndex} />
+    <DefaultRoute handler={ToDoIndex} />
     <Route path='todo' handler={ToDoIndex} />
+    <Route path='oldhome' handler={HomeIndex} />
   </Route>
 );
