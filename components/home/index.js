@@ -1,5 +1,5 @@
 import React from 'react';
-import * as players from './../services/playersCollection';
+import * as players from './../../services/playersCollection';
 
 export default class HomeIndex extends React.Component {
   constructor () {

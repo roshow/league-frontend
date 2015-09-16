@@ -1,7 +1,9 @@
 import React from 'react';
-import ToDoStore from './../stores/ToDoStore'
-import MainSection from './MainSection'
-import TodoTextInput from './TodoTextInput'
+import ToDoStore from './../../stores/ToDoStore';
+import AppDispatcher from './../../dispatcher/AppDispatcher';
+import TodoActions from './../../actions/TodoActions';
+import MainSection from './MainSection';
+import TodoTextInput from './TodoTextInput';
 
 function getTodoState() {
   return {
@@ -20,7 +22,7 @@ export default class ToDoIndex extends React.Component {
 		<div>
 			
 
-			<header id="header">
+		<header id="header">
 	      <h2>Boring ToDo App</h2>
 	      <TodoTextInput
 	        id="new-todo"
@@ -36,14 +38,31 @@ export default class ToDoIndex extends React.Component {
 		);
 	}
 	_onSave (text) {
-    if (text.trim()){
-      ToDoStore.create(text);
-      this.setState(getTodoState()); 
-    }
-  }
+		text = text.trim();
+		if (text){
+		  // ToDoStore.create(text);
+		  // this.setState(getTodoState()); 
+		  TodoActions.create(text);
+		}
+	}
 	componentDidMount () {
 		//Create some dummy initial tasks...
 		[ 'buy milk','foo bar', 'get it from uptown funk' ].map((text) => ToDoStore.create(text));
+		var that = this;
+		AppDispatcher.register((action) => {
+		  var text = action.text;
+
+		  switch(action.actionType) {
+		    case 'TODO_CREATE':
+		      if (text !== '') {
+		        ToDoStore.create(text);
+		        this.setState(getTodoState());
+		        // TodoStore.emitChange();
+		      }
+		      break;
+		  }
+		});
+
 		this.setState(getTodoState()); 
 	}
 	componentWillUnmount () {
