@@ -1,6 +1,5 @@
 import express from 'express';
 import hbs from 'express-handlebars';
-import App from './components/app';
 import serveStatic from 'serve-static';
 import React from 'react/addons';
 import Router from 'react-router';

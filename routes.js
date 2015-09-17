@@ -1,8 +1,8 @@
 import React from 'react';
 import {Route, DefaultRoute} from 'react-router';
-import App from './components/app';
-import HomeIndex from './components/home/index';
-import ToDoIndex from './components/todo/index';
+import App from './js/components/app';
+import HomeIndex from './js/components/home/index';
+import ToDoIndex from './js/components/todo/index';
 
 export default (
   <Route path='/' handler={App}>

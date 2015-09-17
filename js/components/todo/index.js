@@ -1,5 +1,5 @@
 import React from 'react';
-import ToDoStore from './../../stores/ToDoStore';
+import TodoStore from './../../stores/TodoStore';
 import AppDispatcher from './../../dispatcher/AppDispatcher';
 import TodoActions from './../../actions/TodoActions';
 import MainSection from './MainSection';
@@ -7,15 +7,23 @@ import TodoTextInput from './TodoTextInput';
 
 function getTodoState() {
   return {
-    allTodos: ToDoStore.getAll(),
-    areAllComplete: ToDoStore.areAllComplete()
+    allTodos: TodoStore.getAll(),
+    areAllComplete: TodoStore.areAllComplete()
   };
 }
+
 
 export default class ToDoIndex extends React.Component {
 	constructor () {
 		super();
 		this.state = getTodoState();
+		// Have to set _onChange here for now because otherwise passing it into the listener 
+		// requires binding it in that call. I'm assuming the arguments for add and remove 
+		// emit listeners require the same object be passed not just two functions that work 
+		// the same way.
+		this._onChange = () => {
+			this.setState(getTodoState());
+		}.bind(this); 
 	}
 	render () {
 		return (
@@ -40,32 +48,21 @@ export default class ToDoIndex extends React.Component {
 	_onSave (text) {
 		text = text.trim();
 		if (text){
-		  // ToDoStore.create(text);
+		  // TodoStore.create(text);
 		  // this.setState(getTodoState()); 
 		  TodoActions.create(text);
 		}
 	}
 	componentDidMount () {
 		//Create some dummy initial tasks...
-		[ 'buy milk','foo bar', 'get it from uptown funk' ].map((text) => ToDoStore.create(text));
+		[ 'buy milk','foo bar', 'get it from uptown funk' ].map( text => TodoStore.create(text) );
 		var that = this;
-		AppDispatcher.register((action) => {
-		  var text = action.text;
-
-		  switch(action.actionType) {
-		    case 'TODO_CREATE':
-		      if (text !== '') {
-		        ToDoStore.create(text);
-		        this.setState(getTodoState());
-		        // TodoStore.emitChange();
-		      }
-		      break;
-		  }
-		});
+		TodoStore.addChangeListener(this._onChange);
 
 		this.setState(getTodoState()); 
 	}
 	componentWillUnmount () {
-		console.log('component about to unmount');     
+		// console.log('component about to unmount');
+		TodoStore.removeChangeListener(this._onChange);     
 	}
 }

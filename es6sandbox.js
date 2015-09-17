@@ -5,6 +5,12 @@
 // }
 // console.log(newObj)
 
+var x = 0;
+var y = true;
+
+var obj = Object.assign({}, { x, y });
+console.log(obj);
+
 var cart = {
   _wheels: 4,
   get wheels () {
@@ -63,9 +69,9 @@ class Car {
     let inner = 'I play with neighbors in my block and the sewers'
     {
       let innermost = 'I only play with neighbors in my block'
-      console.log(innermost);
+      // console.log(innermost);
     }
-    console.log(outer);
+    // console.log(outer);
   }
 }
 
