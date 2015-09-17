@@ -23,7 +23,7 @@ export default class ToDoIndex extends React.Component {
 		// the same way.
 		this._onChange = () => {
 			this.setState(getTodoState());
-		}.bind(this); 
+		}; 
 	}
 	render () {
 		return (
@@ -48,18 +48,13 @@ export default class ToDoIndex extends React.Component {
 	_onSave (text) {
 		text = text.trim();
 		if (text){
-		  // TodoStore.create(text);
-		  // this.setState(getTodoState()); 
 		  TodoActions.create(text);
 		}
 	}
 	componentDidMount () {
-		//Create some dummy initial tasks...
-		[ 'buy milk','foo bar', 'get it from uptown funk' ].map( text => TodoStore.create(text) );
-		var that = this;
 		TodoStore.addChangeListener(this._onChange);
-
-		this.setState(getTodoState()); 
+		//Create some dummy initial tasks...
+		[ 'buy milk','foo bar', 'get it from uptown funk', 'be cause' ].map( text => this._onSave(text) );
 	}
 	componentWillUnmount () {
 		// console.log('component about to unmount');
