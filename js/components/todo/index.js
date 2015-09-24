@@ -14,6 +14,7 @@ function getTodoState() {
 
 
 export default class ToDoIndex extends React.Component {
+	
 	constructor () {
 		super();
 		this.state = getTodoState();
@@ -25,39 +26,48 @@ export default class ToDoIndex extends React.Component {
 			this.setState(getTodoState());
 		}; 
 	}
+
 	render () {
 		return (
 		<div>
-			
 
-		<header id="header">
+			<header id="header">
+	      
 	      <h2>Boring ToDo App</h2>
-	      <TodoTextInput
-	        id="new-todo"
-	        placeholder="What needs to be done?"
-					onSave={this._onSave.bind(this)}
-				/>
+
 	    </header>
+
+	    <TodoTextInput
+        id="new-todo"
+        placeholder="What needs to be done?"
+				onSave={this._onSave.bind(this)}
+			/>
+
       <MainSection
         allTodos={this.state.allTodos}
         areAllComplete={this.state.areAllComplete}
       />
+
 		</div>
 		);
 	}
+
 	_onSave (text) {
 		text = text.trim();
 		if (text){
 		  TodoActions.create(text);
 		}
 	}
+
 	componentDidMount () {
 		TodoStore.addChangeListener(this._onChange);
 		//Create some dummy initial tasks...
-		[ 'buy milk','foo bar', 'get it from uptown funk', 'be cause' ].map( text => this._onSave(text) );
+		[ 'buy milk','foo bar', 'get it from uptown funk', 'deeez' ].map( text => this._onSave(text) );
 	}
+
 	componentWillUnmount () {
 		// console.log('component about to unmount');
 		TodoStore.removeChangeListener(this._onChange);     
 	}
+
 }

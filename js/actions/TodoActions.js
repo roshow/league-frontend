@@ -1,10 +1,9 @@
 import AppDispatcher from './../dispatcher/AppDispatcher';
-// var TodoConstants = require('../constants/TodoConstants');
+import TodoConstants from './../constants/TodoConstants';
 
 function create (text) {
 	AppDispatcher.dispatch({
-	  // actionType: TodoConstants.TODO_CREATE,
-	  actionType: 'TODO_CREATE',
+	  actionType: TodoConstants.TODO_CREATE,
 	  text: text
 	});
 }

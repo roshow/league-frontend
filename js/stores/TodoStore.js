@@ -2,7 +2,6 @@ import AppDispatcher from './../dispatcher/AppDispatcher';
 import EventEmitter from 'events';
 import TodoConstants from './../constants/TodoConstants';
 
-
 const CHANGE_EVENT = 'change';
 
 var  _todos = {};
@@ -29,6 +28,7 @@ function areAllComplete () {
 	return true;
 }
 
+
 var TodoStore = Object.assign({}, EventEmitter.prototype, {
 
 	create,
@@ -51,6 +51,7 @@ var TodoStore = Object.assign({}, EventEmitter.prototype, {
 
 });
 
+console.log('new generic store');
 
 AppDispatcher.register((action) => {
   var text;

@@ -1,22 +1,33 @@
 import React from 'react';
+import MatchesStore from './../../stores/MatchesStore';
+import MatchInput from './MatchInput';
+
+function getStateFromStores() {
+  return {
+    match: MatchesStore.getFirst()
+  };
+}
 
 export default class HomeIndex extends React.Component {
   constructor () {
       super();
-      this.state = { n: 0 };
+      this.state = getStateFromStores();
       // console.log('current state of affairs: ', this.state);
   }
   render () {
-    return <div>
-      <h1>clicked {this.state.n} times</h1>
-      <button onClick={this.handleClick.bind(this)}>click me!</button>
-    </div>
+    var match = this.state.match;
+    return (
+    <div>
+      <MatchInput
+        match={this.state.match}
+      />
+    </div>)
   }
   componentDidMount () {
-    this.setState({n:8});
-    console.log('I mounted');
+    // this.setState({n:8});
+    // console.log('I mounted');
   }
   handleClick () {
-      this.setState({ n: this.state.n + 1 });
+      // this.setState({ n: this.state.n + 1 });
   }
 }
