@@ -51,8 +51,6 @@ var TodoStore = Object.assign({}, EventEmitter.prototype, {
 
 });
 
-console.log('new generic store');
-
 AppDispatcher.register((action) => {
   var text;
 

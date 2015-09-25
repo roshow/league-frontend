@@ -4,65 +4,7 @@ import EventEmitter from 'events';
 
 const CHANGE_EVENT = 'change';
 
-var matches = [{
-	"id": 0,
-	"players": [
-		{
-			"id": 0,
-			"name": "han",
-			"damage_taken": [0, 0]
-		},
-		{
-			"id": 1,
-			"name": "bossk",
-			"damage_taken": [0, 0, 0]
-		}
-	]
-	
-}];
-
-var players = [{
-	"id": 0,
-	"name": "han",
-	"ships": [
-		{
-			"damage_cap": 13,
-			"points": 57
-		},
-		{
-			"damage_cap": 5,
-			"points": 42 
-		}
-	]
-},
-{
-	"id": 1,
-	"name": "bossk",
-	"ships": [
-		{
-			"damage_cap": 8,
-			"points": 26
-		},
-		{
-			"damage_cap": 8,
-			"points": 26
-		},
-		{
-			"damage_cap": 12,
-			"points": 48
-		}
-	]
-}];
-
-var MatchesStore = Object.assign({}, EventEmitter.prototype, {
-
-	getFirst () {
-		return matches[0];
-	},
-
-	getPlayers () {
-		return players;
-	},
+var RankingStore = Object.assign({}, EventEmitter.prototype, {
 
   emitChange () {
     this.emit(CHANGE_EVENT);
@@ -95,9 +37,24 @@ AppDispatcher.register( action => {
 			  }
 			} = matches;
 			damage_taken[ship] = damage;
-      MatchesStore.emitChange();
+      RankingStore.emitChange();
       break;
   }
 });
 
-export default MatchesStore;
+export default RankingStore;
+
+// function match_points (match) {
+// 	let matchpoints = match.map(function ({id, damage_taken}) {
+// 		let ships = players_mockdata[id].ships
+// 		let points = ships
+// 			.map(({damage_cap, points}, i) => Math.floor(damage_taken[i] * (points/damage_cap)))
+// 			.reduce((a, b) => a + b)
+// 		if (points === ships.reduce(({points: a}, {points: b}) => a + b)) {
+// 			return 100;
+// 		}
+// 		return points;
+// 	});
+// 	[matchpoints[1], matchpoints[0]] = [matchpoints[0], matchpoints[1]];
+// 	return matchpoints;
+// }

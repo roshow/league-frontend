@@ -3,20 +3,24 @@ import React from 'react';
 export default class MatchInput extends React.Component {
   constructor () {
       super();
-      this.onChange = this.onChange.bind(this);
+      this._onChange = this._onChange.bind(this);
       this.onSave = this.onSave.bind(this);
 
       this.state = { value: 0 };
   }
+
   render () {
     return (
+
     <input
       value={this.state.value}
-      onChange={this.onChange}
+      onChange={this._onChange}
       onBlur={this.onSave}
     />
+    
     );
   }
+
   componentWillMount () {
     this.setState({
       value: this.props.damage
@@ -27,7 +31,7 @@ export default class MatchInput extends React.Component {
       value: nextProps.damage
     });
   }
-  onChange (event) {
+  _onChange (event) {
     var val = event.target.value.trim() || 0;
     var num = parseInt(val, 10);
     num = isNaN(num) ? 0 : num;

@@ -12,6 +12,7 @@ export default class MatchSection extends React.Component {
 	render () {
 	    var match = this.props.match;
 	    return (
+
 	    	<ul>
 	        { match.players.map( (player, player_index) => (
 	        
@@ -26,7 +27,7 @@ export default class MatchSection extends React.Component {
 	                damage={damage}
 	                playerIndex={player_index}
 	                shipIndex={ship_index}
-	                onSave={this.onDamageInput.bind(this)} 
+	                onSave={this._onDamageRecorded.bind(this)} 
 	              />
 	              : {damage}
 	            </li>
@@ -37,16 +38,16 @@ export default class MatchSection extends React.Component {
 	        
 	        )) }
 	      </ul>
-	      )
+	      
+	      );
 	  }
 
-	  onDamageInput (damage, player, ship) {
-	  	var action = {
+	  _onDamageRecorded (damage, player, ship) {
+	  	MatchActions.damageRecorded({
 	  		match: this.props.match.id,
 	  		damage,
 	  		player,
 	  		ship,
-	  	}
-	  	MatchActions.damageRecorded(action);
+	  	});
 	  }
 }

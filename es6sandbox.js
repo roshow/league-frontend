@@ -93,8 +93,7 @@ var matches = [{
 
 var matchId = 0;
 var playersIndex = 0;
-var {
-  [matchId]: {
+var { [matchId]: {
     players: {
       [playersIndex]: {
         damage_taken
