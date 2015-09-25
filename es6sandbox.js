@@ -9,7 +9,6 @@ var x = 0;
 var y = true;
 
 var obj = Object.assign({}, { x, y });
-console.log(obj);
 
 var cart = {
   _wheels: 4,
@@ -26,7 +25,7 @@ var cart = {
   },
   dismantle () {
     this._wheels = 0;
-    console.warn(`you're all going to pay for this!`);
+    // console.warn(`you're all going to pay for this!`);
   }
 };
 
@@ -74,6 +73,39 @@ class Car {
     // console.log(outer);
   }
 }
+
+var matches = [{
+  "id": 0,
+  "players": [
+    {
+      "id": 0,
+      "name": "han",
+      "damage_taken": [0, 0]
+    },
+    {
+      "id": 1,
+      "name": "bossk",
+      "damage_taken": [0, 0, 0]
+    }
+  ]
+  
+}];
+
+var matchId = 0;
+var playersIndex = 0;
+var {
+  [matchId]: {
+    players: {
+      [playersIndex]: {
+        damage_taken
+      }
+    }
+  }
+} = matches;
+
+console.log('damage_taken, ', damage_taken);
+// console.log('player', player);
+// console.log('players, ', players);
 
 
 // export default { cart };

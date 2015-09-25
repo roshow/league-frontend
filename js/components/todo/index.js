@@ -38,8 +38,8 @@ export default class ToDoIndex extends React.Component {
 	    </header>
 
 	    <TodoTextInput
-        id="new-todo"
-        placeholder="What needs to be done?"
+		        id="new-todo"
+		        placeholder="What needs to be done?"
 				onSave={this._onSave.bind(this)}
 			/>
 

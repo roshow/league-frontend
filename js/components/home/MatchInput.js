@@ -1,36 +1,42 @@
 import React from 'react';
 
-function listShips (ships) {
-  var listItems =  ships.map( (damage, i) => (
-  <li>
-    Ship {i + 1}: <input value={damage} />
-  </li>
-  ));
-
-  return (
-  <ul>
-    {listItems}
-  </ul>
-  );
-}
-
 export default class MatchInput extends React.Component {
   constructor () {
       super();
+      this.onChange = this.onChange.bind(this);
+      this.onSave = this.onSave.bind(this);
+
+      this.state = { value: 0 };
   }
   render () {
-    var match = this.props.match;
     return (
-    <div>
-      <div>
-        <h3>{match.player_one.name}</h3>
-        {listShips(match.player_one.damage_taken)}
-      </div>
-      <div>
-        <h3>{match.player_two.name}</h3>
-        {listShips(match.player_two.damage_taken)}
-      </div>
-    </div>
+    <input
+      value={this.state.value}
+      onChange={this.onChange}
+      onBlur={this.onSave}
+    />
     );
   }
+  componentWillMount () {
+    this.setState({
+      value: this.props.damage
+    });
+  }
+  componentWillReceiveProps (nextProps) {
+    this.setState({
+      value: nextProps.damage
+    });
+  }
+  onChange (event) {
+    var val = event.target.value.trim() || 0;
+    var num = parseInt(val, 10);
+    num = isNaN(num) ? 0 : num;
+    this.setState({
+      value: num
+    });
+  }
+  onSave () {
+    this.props.onSave(this.state.value, this.props.playerIndex, this.props.shipIndex);
+  }
+
 }
