@@ -54,15 +54,13 @@ var players = [{
 	]
 }];
 
-var MatchesStore = Object.assign({}, EventEmitter.prototype, {
+var MatchStore = Object.assign({}, EventEmitter.prototype, {
 
-	getFirst () {
-		return matches[0];
-	},
+	getFirst: () => matches[0],
 
-	getPlayers () {
-		return players;
-	},
+	getAll: () => matches,
+
+	getPlayers: () => players,
 
   emitChange () {
     this.emit(CHANGE_EVENT);
@@ -79,11 +77,10 @@ var MatchesStore = Object.assign({}, EventEmitter.prototype, {
 });
 
 
-AppDispatcher.register( action => {
+MatchStore.dispatchToken = AppDispatcher.register( action => {
 
   switch(action.type) {
     case WingRankerConstants.DAMAGE_RECORDED:
-    	console.log('Matches Store Got the Action, chief.');
     	var { damage, match, player, ship } = action;
     	var {
 			  [match]: {
@@ -95,9 +92,9 @@ AppDispatcher.register( action => {
 			  }
 			} = matches;
 			damage_taken[ship] = damage;
-      MatchesStore.emitChange();
+      MatchStore.emitChange();
       break;
   }
 });
 
-export default MatchesStore;
+export default MatchStore;

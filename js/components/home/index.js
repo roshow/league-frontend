@@ -1,17 +1,20 @@
 import React from 'react';
-import MatchesStore from './../../stores/MatchesStore';
+import MatchStore from './../../stores/MatchStore';
+import ScoreStore from './../../stores/ScoreStore';
 import MatchSection from './Match';
 import Rankings from './Rankings';
 
 function getStateFromStores() {
   return {
-    match: MatchesStore.getFirst(),
-    players: MatchesStore.getPlayers(),
+    match: MatchStore.getFirst(),
+    players: MatchStore.getPlayers(),
+    scores: ScoreStore.getAll(),
   };
 }
 export default class HomeIndex extends React.Component {
   constructor () {
       super();
+
       this._onChange = () => {
         this.setState(getStateFromStores());
       }; 
@@ -20,19 +23,22 @@ export default class HomeIndex extends React.Component {
       // console.log('current state of affairs: ', this.state);
   }
   render () {
+    var { match, scores, players } = this.state;
     return (
     <div>
-      <MatchSection match={this.state.match} />
-      <Rankings match={this.state.match} players={this.state.players} />
+      <MatchSection match={match} players={players} />
+      <Rankings match={match}/>
     </div>
     )
   }
 
   componentDidMount () {
-    MatchesStore.addChangeListener(this._onChange);
+    MatchStore.addChangeListener(this._onChange);
+    ScoreStore.addChangeListener(this._onChange);
   }
 
   componentWillUnmount () {
-    MatchesStore.removeChangeListener(this._onChange);     
+    MatchStore.removeChangeListener(this._onChange);   
+    ScoreStore.removeChangeListener(this._onChange);  
   }
 }
