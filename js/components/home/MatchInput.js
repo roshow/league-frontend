@@ -10,9 +10,13 @@ export default class MatchInput extends React.Component {
   }
 
   render () {
-    return (
+    var _styles = {
+      width: '25px'
+    };
 
+    return (
     <input
+      style={_styles}
       value={this.state.value}
       onChange={this._onChange}
       onBlur={this.onSave}
@@ -34,7 +38,9 @@ export default class MatchInput extends React.Component {
   _onChange (event) {
     var val = event.target.value.trim() || 0;
     var num = parseInt(val, 10);
+    var maxValue = this.props.maxValue;
     num = isNaN(num) ? 0 : num;
+    num = num > maxValue ? maxValue : num;
     this.setState({
       value: num
     });

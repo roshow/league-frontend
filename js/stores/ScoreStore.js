@@ -1,16 +1,21 @@
 import WingRankerConstants from './../constants/WingRankerConstants';
 import WingRankerUtils from './../utils/WingRankerUtils.js';
 import AppDispatcher from './../dispatcher/AppDispatcher';
+import PlayerStore from './PlayerStore';
 import MatchStore from './MatchStore.js';
 import EventEmitter from 'events';
 
 const CHANGE_EVENT = 'change';
 
 var matches = MatchStore.getAll();
-var players = MatchStore.getPlayers();
+var players = PlayerStore.getAll();
 
 var scores = players.map( player => ({
   id: player.id,
+  overall: {
+    tournament_points: 0,
+    mov: 0,
+  },
   matches: {},
 }) );
 
@@ -24,12 +29,26 @@ function updateMatchScore (matchId) {
     mov: matchPoints[0],
     tournament_points: calcTournamentPoints(...matchPoints),
   };
+  updatePlayerOverall(playerOne.id);
   scores[playerTwo.id].matches[matchId] = {
     mov: matchPoints[1],
     tournament_points: calcTournamentPoints(...matchPoints.reverse()),
   };
-  console.log(scores);
+  updatePlayerOverall(playerTwo.id);
+}
 
+function updatePlayerOverall (playerId) {
+  var player = scores[playerId];
+  var overall = Object.keys(player.matches).reduce( (combined, key) => {
+    var match = player.matches[key];
+    combined.tournament_points += match.tournament_points;
+    combined.mov += match.mov;
+    return combined;
+  }, {
+    tournament_points: 0,
+    mov: 0,
+  });
+  player.overall = overall;
 }
 
 var ScoreStore = Object.assign({}, EventEmitter.prototype, {
@@ -60,6 +79,7 @@ AppDispatcher.register( action => {
       matches = MatchStore.getAll();
 
       updateMatchScore(action.match);
+      console.log(scores);
       ScoreStore.emitChange();
 
       break;

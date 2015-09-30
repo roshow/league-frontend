@@ -28,20 +28,21 @@ export default class MatchSection extends React.Component {
         <li key={player_index} >
           <h4>{player.name}{ this.markWinner(player.id, winnerId) }</h4>
           <ul>
-            { player.damage_taken.map( (damage, ship_index) => (
-            
-            <li key={ship_index}>
-              ship {ship_index + 1}: 
-              <MatchInput 
-                damage={damage}
-                playerIndex={player_index}
-                shipIndex={ship_index}
-                onSave={this._onDamageRecorded.bind(this)} 
-              />
-              : {damage}
-            </li>
-            
-            )) }
+            { player.damage_taken.map( (damage, ship_index) => {
+            	var ship = players[player.id].ships[ship_index];
+	            return (
+	            <li key={ship_index}>
+	              ship {ship_index + 1}:&nbsp;
+	              <MatchInput 
+	                damage={damage}
+	                maxValue={ship.damage_cap}
+	                playerIndex={player_index}
+	                shipIndex={ship_index}
+	                onSave={this._onDamageRecorded.bind(this)} 
+	              />/{ship.damage_cap} ({ship.points} points{ship.large_base ? ', large' : ''})
+	            </li>
+	            ) 
+          }) }
           </ul>
         </li>
         

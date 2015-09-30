@@ -15,4 +15,20 @@ function calcMatchPoints (match, players) {
   return matchpoints;
 }
 
-export default { calcMatchPoints };
+function addPlayerMatchScores (matches) {
+  // console.log(Object.keys(matches));
+  // Object.keys(matches).reduce( (totals, key) => {
+  //   totals.tournament_points += matches[key].tournament_points;
+  //   totals.mov += matches[key].mov;
+  //   return totals;
+  // }, {
+  //   tournament_points: 0,
+  //   mov: 0,
+  // });
+  return {
+    tournament_points: 0,
+    mov: 0,
+  };
+}
+
+export default { calcMatchPoints, addPlayerMatchScores };

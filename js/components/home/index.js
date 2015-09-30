@@ -1,13 +1,16 @@
 import React from 'react';
+import PlayerStore from './../../stores/PlayerStore';
 import MatchStore from './../../stores/MatchStore';
 import ScoreStore from './../../stores/ScoreStore';
 import MatchSection from './Match';
 import Rankings from './Rankings';
 
+console.log('playerStore: ', PlayerStore);
+
 function getStateFromStores() {
   return {
     match: MatchStore.getFirst(),
-    players: MatchStore.getPlayers(),
+    players: PlayerStore.getAll(),
     scores: ScoreStore.getAll(),
   };
 }
@@ -27,7 +30,7 @@ export default class HomeIndex extends React.Component {
     return (
     <div>
       <MatchSection match={match} players={players} />
-      <Rankings match={match}/>
+      <Rankings scores={scores} players={players} />
     </div>
     )
   }

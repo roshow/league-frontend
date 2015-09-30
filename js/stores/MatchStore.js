@@ -21,46 +21,11 @@ var matches = [{
 	
 }];
 
-var players = [{
-	"id": 0,
-	"name": "han",
-	"ships": [
-		{
-			"damage_cap": 13,
-			"points": 57
-		},
-		{
-			"damage_cap": 5,
-			"points": 42 
-		}
-	]
-},
-{
-	"id": 1,
-	"name": "bossk",
-	"ships": [
-		{
-			"damage_cap": 8,
-			"points": 26
-		},
-		{
-			"damage_cap": 8,
-			"points": 26
-		},
-		{
-			"damage_cap": 12,
-			"points": 48
-		}
-	]
-}];
-
 var MatchStore = Object.assign({}, EventEmitter.prototype, {
 
 	getFirst: () => matches[0],
 
 	getAll: () => matches,
-
-	getPlayers: () => players,
 
   emitChange () {
     this.emit(CHANGE_EVENT);
