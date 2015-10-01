@@ -4,6 +4,7 @@ import MatchStore from './../../stores/MatchStore';
 import ScoreStore from './../../stores/ScoreStore';
 import MatchSection from './Match';
 import Rankings from './Rankings';
+import ScoreActions from './../../actions/ScoreActions';
 
 
 function getStateFromStores() {
@@ -42,7 +43,7 @@ export default class HomeIndex extends React.Component {
   }
 
   _radioChange (event) {
-    console.log(event.target.value);
+    ScoreActions.scoringTypeChanged(event.target.value);
   }
 
   componentDidMount () {

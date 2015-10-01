@@ -26,18 +26,17 @@ function updateMatchScore (matchId) {
   var matchPoints = WingRankerUtils.calcMatchPoints(match, players, scoringType);
   var mov = WingRankerUtils.calcMov(matchPoints);
   var tournamentPoints = WingRankerUtils.calcTournamentPoints(matchPoints);
-  var [player1, player2] = match.players;
 
   match.players.forEach( (player, index) => {
+    
     scores[player.id].matches[matchId] = {
       mov: mov[index],
       tournament_points: tournamentPoints[index],
-      sos: 9,
     };
+
+    updatePlayerOverall(player.id);
   });
-  
-  updatePlayerOverall(player1.id);  
-  updatePlayerOverall(player2.id);
+
 }
 
 function updatePlayerOverall (playerId) {
@@ -86,6 +85,7 @@ AppDispatcher.register( action => {
 
       AppDispatcher.waitFor([MatchStore.dispatchToken]);
       matches = MatchStore.getAll();
+      
       updateMatchScore(action.match);
 
       ScoreStore.emitChange();
@@ -95,8 +95,10 @@ AppDispatcher.register( action => {
     case WingRankerConstants.SCORINGTYPE_CHANGED:
 
       AppDispatcher.waitFor([MatchStore.dispatchToken]);
-      matches = MatchStore.getAll();
+      scoringType = action.scoringType;
+
       updateAllMatchScores();
+
       ScoreStore.emitChange();
 
       break;
