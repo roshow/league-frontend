@@ -5,7 +5,6 @@ import ScoreStore from './../../stores/ScoreStore';
 import MatchSection from './Match';
 import Rankings from './Rankings';
 
-console.log('playerStore: ', PlayerStore);
 
 function getStateFromStores() {
   return {
@@ -28,11 +27,22 @@ export default class HomeIndex extends React.Component {
   render () {
     var { match, scores, players } = this.state;
     return (
-    <div>
+    <div className="container">
+      <section>
+        <div className="input-group">
+          <label><input type="radio" name="scoringType" value="official" onChange={this._radioChange.bind(this)} />official</label>
+          <label><input type="radio" name="scoringType" value="partial" onChange={this._radioChange.bind(this)} />full partial</label>
+          <label><input type="radio" name="scoringType" value="classic" onChange={this._radioChange.bind(this)} />classic</label>
+        </div>
+      </section>
       <MatchSection match={match} players={players} />
       <Rankings scores={scores} players={players} />
     </div>
     )
+  }
+
+  _radioChange (event) {
+    console.log(event.target.value);
   }
 
   componentDidMount () {

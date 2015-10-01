@@ -1,25 +1,32 @@
 import WingRankerConstants from './../constants/WingRankerConstants';
+import WingRankerUtils from './../utils/WingRankerUtils.js';
 import AppDispatcher from './../dispatcher/AppDispatcher';
+import PlayerStore from './PlayerStore';
 import EventEmitter from 'events';
 
 const CHANGE_EVENT = 'change';
 
-var matches = [{
-	"id": 0,
-	"players": [
-		{
-			"id": 0,
-			"name": "han",
-			"damage_taken": [0, 0]
-		},
-		{
-			"id": 1,
-			"name": "bossk",
-			"damage_taken": [0, 0, 0]
-		}
-	]
-	
-}];
+var players = PlayerStore.getAll();
+var matches = [];
+
+var makePlayer = player => ({
+	id: player.id,
+	name: 'player ' + player.id,
+	damage_taken: Array.from(player.ships, ship => 0)
+});
+
+function newMatch (...matchPlayers) {
+	var match = {
+		points: [0, 0],
+		players: Array.from(matchPlayers, makePlayer)
+	};
+	match.id = matches.length; // id is index array for now.
+	matches.push(match);
+	return match;
+}
+
+// create a match right away, just to keep things interesting...
+newMatch(players[0],players[1]);
 
 var MatchStore = Object.assign({}, EventEmitter.prototype, {
 
@@ -57,6 +64,7 @@ MatchStore.dispatchToken = AppDispatcher.register( action => {
 			  }
 			} = matches;
 			damage_taken[ship] = damage;
+			// matches[match].points = WingRankerUtils.calcMatchPoints(matches[match], players);
       MatchStore.emitChange();
       break;
   }

@@ -26,7 +26,7 @@ export default class MatchSection extends React.Component {
         { match.players.map( (player, player_index) => (
         
         <li key={player_index} >
-          <h4>{player.name}{ this.markWinner(player.id, winnerId) }</h4>
+          <h4>{players[player.id].name}</h4>
           <ul>
             { player.damage_taken.map( (damage, ship_index) => {
             	var ship = players[player.id].ships[ship_index];

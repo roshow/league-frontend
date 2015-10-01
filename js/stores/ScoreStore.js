@@ -9,6 +9,7 @@ const CHANGE_EVENT = 'change';
 
 var matches = MatchStore.getAll();
 var players = PlayerStore.getAll();
+var scoringType = 'official';
 
 var scores = players.map( player => ({
   id: player.id,
@@ -19,22 +20,24 @@ var scores = players.map( player => ({
   matches: {},
 }) );
 
-var calcTournamentPoints = (player, opponent) => ( player > opponent ) ? ( player === 100 || ( player > opponent + 12 ) ? 5 : 3 ) : ( player === opponent ) ? 1 : 0;
-
 function updateMatchScore (matchId) {
   
-  var matchPoints = WingRankerUtils.calcMatchPoints(matches[matchId], players);
-  var [playerOne, playerTwo] = matches[matchId].players;
-  scores[playerOne.id].matches[matchId] = {
-    mov: matchPoints[0],
-    tournament_points: calcTournamentPoints(...matchPoints),
-  };
-  updatePlayerOverall(playerOne.id);
-  scores[playerTwo.id].matches[matchId] = {
-    mov: matchPoints[1],
-    tournament_points: calcTournamentPoints(...matchPoints.reverse()),
-  };
-  updatePlayerOverall(playerTwo.id);
+  var match = matches[matchId];
+  var matchPoints = WingRankerUtils.calcMatchPoints(match, players, scoringType);
+  var mov = WingRankerUtils.calcMov(matchPoints);
+  var tournamentPoints = WingRankerUtils.calcTournamentPoints(matchPoints);
+  var [player1, player2] = match.players;
+
+  match.players.forEach( (player, index) => {
+    scores[player.id].matches[matchId] = {
+      mov: mov[index],
+      tournament_points: tournamentPoints[index],
+      sos: 9,
+    };
+  });
+  
+  updatePlayerOverall(player1.id);  
+  updatePlayerOverall(player2.id);
 }
 
 function updatePlayerOverall (playerId) {
@@ -50,6 +53,12 @@ function updatePlayerOverall (playerId) {
   });
   player.overall = overall;
 }
+
+function updateAllMatchScores () {
+  Object.keys(matches).forEach(updateMatchScore);
+}
+
+
 
 var ScoreStore = Object.assign({}, EventEmitter.prototype, {
 
@@ -77,13 +86,22 @@ AppDispatcher.register( action => {
 
       AppDispatcher.waitFor([MatchStore.dispatchToken]);
       matches = MatchStore.getAll();
-
       updateMatchScore(action.match);
-      console.log(scores);
+
+      ScoreStore.emitChange();
+
+      break;
+
+    case WingRankerConstants.SCORINGTYPE_CHANGED:
+
+      AppDispatcher.waitFor([MatchStore.dispatchToken]);
+      matches = MatchStore.getAll();
+      updateAllMatchScores();
       ScoreStore.emitChange();
 
       break;
   }
+
 });
 
 export default ScoreStore;

@@ -4,7 +4,7 @@ import EventEmitter from 'events';
 
 var players = [{
 	"id": 0,
-	"name": "han",
+	"name": "Han",
 	"ships": [
 		{
 			"damage_cap": 13,
@@ -20,7 +20,7 @@ var players = [{
 },
 {
 	"id": 1,
-	"name": "bossk",
+	"name": "Bossk",
 	"ships": [
 		{
 			"damage_cap": 8,

@@ -7,21 +7,32 @@ export default class MatchSection extends React.Component {
 	}
 
 	render () {
-		// var matchUp = this.props.match.players;
-		// var allPlayers = this.props.players;
 		var { scores, players } = this.props;
+		var _tableStyles = {};
+
+		var playerScores = scores.map( (score, index) => (
+		  <tr key={score.id}>
+		    <th scope="row">{index + 1}</th>
+		    <td>{players[score.id].name}</td>
+		    <td>{score.overall.tournament_points}</td>
+		    <td>{score.overall.mov}</td>
+		  </tr>
+		));
+
 		return (
-			<div>
-				<ul>
-					{players.map( player => {
-						return (
-						<li key={player.id}>
-							<h2>{player.name} {scores[player.id].overall.tournament_points}|{scores[player.id].overall.mov}</h2>
-						</li>
-						);
-					} )}
-				</ul>
-			</div>
-		);
+		<table className="table" style={_tableStyles}>
+			<thead>
+			  <tr>
+			    <th>Rank</th>
+			    <th>Player</th>
+			    <th>Score</th>
+			    <th>MOV</th>
+			  </tr>
+			</thead>
+			<tbody>
+				{playerScores}
+			</tbody>
+		</table>);
 	}
 }
+
