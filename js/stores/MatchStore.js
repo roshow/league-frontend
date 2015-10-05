@@ -8,6 +8,9 @@ const CHANGE_EVENT = 'change';
 
 var players = PlayerStore.getAll();
 var matches = [];
+var settings = {
+	scoringType: 'official',
+};
 
 var makePlayer = player => ({
 	id: player.id,
@@ -30,10 +33,6 @@ newMatch(players[0],players[1]);
 
 var MatchStore = Object.assign({}, EventEmitter.prototype, {
 
-	getFirst: () => matches[0],
-
-	getAll: () => matches,
-
   emitChange () {
     this.emit(CHANGE_EVENT);
   },
@@ -44,7 +43,13 @@ var MatchStore = Object.assign({}, EventEmitter.prototype, {
 
   removeChangeListener (callback) {
     this.removeListener(CHANGE_EVENT, callback);
-  }
+  },
+
+	getFirst: () => matches[0],
+
+	getAll: () => matches,
+
+	getSettings: () => settings,
 
 });
 
@@ -66,6 +71,14 @@ MatchStore.dispatchToken = AppDispatcher.register( action => {
 			damage_taken[ship] = damage;
 			// matches[match].points = WingRankerUtils.calcMatchPoints(matches[match], players);
       MatchStore.emitChange();
+      break;
+
+    case WingRankerConstants.SCORINGTYPE_CHANGED:
+
+      settings.scoringType = action.scoringType;
+
+      MatchStore.emitChange();
+
       break;
   }
 });

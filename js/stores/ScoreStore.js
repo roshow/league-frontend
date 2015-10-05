@@ -8,8 +8,8 @@ import EventEmitter from 'events';
 const CHANGE_EVENT = 'change';
 
 var matches = MatchStore.getAll();
+var settings = MatchStore.getSettings();
 var players = PlayerStore.getAll();
-var scoringType = 'official';
 
 var scores = players.map( player => ({
   id: player.id,
@@ -23,7 +23,7 @@ var scores = players.map( player => ({
 function updateMatchScore (matchId) {
   
   var match = matches[matchId];
-  var matchPoints = WingRankerUtils.calcMatchPoints(match, players, scoringType);
+  var matchPoints = WingRankerUtils.calcMatchPoints(match, players, settings.scoringType);
   var mov = WingRankerUtils.calcMov(matchPoints);
   var tournamentPoints = WingRankerUtils.calcTournamentPoints(matchPoints);
 
@@ -95,7 +95,8 @@ AppDispatcher.register( action => {
     case WingRankerConstants.SCORINGTYPE_CHANGED:
 
       AppDispatcher.waitFor([MatchStore.dispatchToken]);
-      scoringType = action.scoringType;
+      
+      settings = MatchStore.getSettings();
 
       updateAllMatchScores();
 

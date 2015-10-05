@@ -9,6 +9,14 @@ function damageRecorded (event={}) {
 	// console.log(payload);
 }
 
+function scoringTypeChanged (scoringType='official') {
+	AppDispatcher.dispatch({
+		type: WingRankerConstants.SCORINGTYPE_CHANGED,
+		scoringType,
+	});
+}
+
 export default { 
 	damageRecorded,
+	scoringTypeChanged,
 };
