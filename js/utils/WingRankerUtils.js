@@ -27,7 +27,7 @@ function calcMatchPoints (match, players, scoringType='official') {
         }
 
         return pointsEarned;
-        
+
       })
       .reduce((a, b) => a + b);
 
@@ -51,20 +51,16 @@ function calcTournamentPoints (matchPoints) {
   return [calcTPts_oneway(...matchPoints), calcTPts_oneway(matchPoints[1], matchPoints[0])];
 }
 
-function addPlayerMatchScores (matches) {
-  // console.log(Object.keys(matches));
-  // Object.keys(matches).reduce( (totals, key) => {
-  //   totals.tournament_points += matches[key].tournament_points;
-  //   totals.mov += matches[key].mov;
-  //   return totals;
-  // }, {
-  //   tournament_points: 0,
-  //   mov: 0,
-  // });
-  return {
-    tournament_points: 0,
-    mov: 0,
-  };
+function rankScores (scores) {
+  return scores.concat().sort(function ({ overall: aOverall},  { overall: bOverall}) {
+    if ( 
+      aOverall.tournament_points >= bOverall.tournament_points ||
+      aOverall.mov >= bOverall.mov 
+    ) {
+      return -1;
+    }
+    return 1;
+  });
 }
 
-export default { calcMatchPoints, addPlayerMatchScores, calcMov, calcTournamentPoints };
+export default { calcMatchPoints, calcMov, calcTournamentPoints, rankScores };

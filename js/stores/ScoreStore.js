@@ -32,6 +32,7 @@ function updateMatchScore (matchId) {
     scores[player.id].matches[matchId] = {
       mov: mov[index],
       tournament_points: tournamentPoints[index],
+      opponent: match.players[ (index === 0) ? 1 : 0 ].id,
     };
 
     updatePlayerOverall(player.id);
@@ -58,10 +59,7 @@ function updateAllMatchScores () {
 }
 
 
-
 var ScoreStore = Object.assign({}, EventEmitter.prototype, {
-
-  getAll: () => scores,
 
   emitChange () {
     this.emit(CHANGE_EVENT);
@@ -73,7 +71,9 @@ var ScoreStore = Object.assign({}, EventEmitter.prototype, {
 
   removeChangeListener (callback) {
     this.removeListener(CHANGE_EVENT, callback);
-  }
+  },
+
+  getAll: () => scores,
 
 });
 

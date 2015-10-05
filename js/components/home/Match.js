@@ -41,8 +41,8 @@ export default class MatchSection extends React.Component {
 	                onSave={this._onDamageRecorded.bind(this)} 
 	              /> (damage) / {ship.damage_cap} (shield + hulls), {ship.points} points{ship.large_base ? ' (large base)' : ''}
 	            </li>
-	            ) 
-          }) }
+	            )
+            })}
           </ul>
         </li>
         

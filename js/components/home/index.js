@@ -12,38 +12,60 @@ function getStateFromStores() {
     match: MatchStore.getFirst(),
     players: PlayerStore.getAll(),
     scores: ScoreStore.getAll(),
+    settings: MatchStore.getSettings(),
   };
 }
+
+
+
 export default class HomeIndex extends React.Component {
   constructor () {
       super();
 
       this._onChange = () => {
         this.setState(getStateFromStores());
-      }; 
+      };
+      this._radioChange = event => {
+        MatchActions.scoringTypeChanged(event.target.value);
+      }
 
       this.state = getStateFromStores();
       // console.log('current state of affairs: ', this.state);
   }
   render () {
     var { match, scores, players } = this.state;
+    var scoringTypeInputs = [{
+      val: 'official',
+      print: 'official'
+    },
+    {
+      val: 'partial',
+      print: 'full partial'
+    },
+    {
+      val: 'classic',
+      print: 'classic'
+    }].map( scoringType => (
+      <label key={scoringType.val}>
+        <input type="radio" 
+          name="scoringType" 
+          value={scoringType.val} 
+          checked={scoringType.val === this.state.settings.scoringType}
+          onChange={this._radioChange} 
+        />{scoringType.print}
+      </label>
+    ));
     return (
     <div className="container">
       <section>
         <div className="input-group">
-          <label><input type="radio" name="scoringType" value="official" onChange={this._radioChange.bind(this)} />official</label>
-          <label><input type="radio" name="scoringType" value="partial" onChange={this._radioChange.bind(this)} />full partial</label>
-          <label><input type="radio" name="scoringType" value="classic" onChange={this._radioChange.bind(this)} />classic</label>
+          {scoringTypeInputs}
         </div>
       </section>
-      <MatchSection match={match} players={players} />
+      <MatchSection match={match} players={players} scores={scores}/>
       <Rankings scores={scores} players={players} />
     </div>
     )
-  }
-
-  _radioChange (event) {
-    MatchActions.scoringTypeChanged(event.target.value);
   }
 
   componentDidMount () {

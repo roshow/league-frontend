@@ -10,12 +10,12 @@ export default class MatchSection extends React.Component {
 		var { scores, players } = this.props;
 		var _tableStyles = {};
 
-		var playerScores = scores.map( (score, index) => (
+		var playerScores = WingRankerUtils.rankScores(scores).map( (score, index) => (
 		  <tr key={score.id}>
-		    <th scope="row">{index + 1}</th>
 		    <td>{players[score.id].name}</td>
 		    <td>{score.overall.tournament_points}</td>
 		    <td>{score.overall.mov}</td>
+		    <td>TBD</td>
 		  </tr>
 		));
 
@@ -23,10 +23,10 @@ export default class MatchSection extends React.Component {
 		<table className="table" style={_tableStyles}>
 			<thead>
 			  <tr>
-			    <th>Rank</th>
 			    <th>Player</th>
 			    <th>Score</th>
 			    <th>MOV</th>
+			    <th>SoS</th>
 			  </tr>
 			</thead>
 			<tbody>
