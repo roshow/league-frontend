@@ -15,7 +15,7 @@ export default class MatchSection extends React.Component {
 		    <td>{players[score.id].name}</td>
 		    <td>{score.overall.tournament_points}</td>
 		    <td>{score.overall.mov}</td>
-		    <td>TBD</td>
+		    <td>{score.overall.sos}</td>
 		  </tr>
 		));
 

@@ -16,6 +16,7 @@ var scores = players.map( player => ({
   overall: {
     tournament_points: 0,
     mov: 0,
+    sos: 0,
   },
   matches: {},
 }) );
@@ -38,6 +39,18 @@ function updateMatchScore (matchId) {
     updatePlayerOverall(player.id);
   });
 
+  setSoSes();
+
+}
+
+function setSoSes () {
+  scores = scores.map( player => {
+    var playerMatches = player.matches;
+    player.overall.sos = Object.keys(playerMatches).reduce( (sos, matchId) => {
+      return scores[playerMatches[matchId].opponent].overall.tournament_points + sos
+    }, 0);
+    return player;
+  });
 }
 
 function updatePlayerOverall (playerId) {
