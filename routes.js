@@ -9,5 +9,6 @@ export default (
     <DefaultRoute handler={HomeIndex} />
     <Route path='todo' handler={ToDoIndex} />
     <Route path='wingranker' handler={HomeIndex} />
+    <Route path='wingranker/' handler={HomeIndex} />
   </Route>
 );

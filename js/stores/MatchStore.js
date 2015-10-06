@@ -28,8 +28,9 @@ function newMatch (...matchPlayers) {
 	return match;
 }
 
-// create a match right away, just to keep things interesting...
+// create a couple of matches right away, just to keep things interesting...
 newMatch(players[0],players[1]);
+newMatch(players[2],players[3]);
 
 var MatchStore = Object.assign({}, EventEmitter.prototype, {
 

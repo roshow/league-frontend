@@ -54,7 +54,7 @@ function calcTournamentPoints (matchPoints) {
 function rankScores (scores) {
   return scores.concat().sort(function ({ overall: aOverall},  { overall: bOverall}) {
     if ( 
-      aOverall.tournament_points >= bOverall.tournament_points ||
+      aOverall.tournament_points > bOverall.tournament_points ||
       aOverall.mov >= bOverall.mov 
     ) {
       return -1;

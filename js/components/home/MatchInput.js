@@ -46,7 +46,7 @@ export default class MatchInput extends React.Component {
     });
   }
   onSave () {
-    this.props.onSave(this.state.value, this.props.playerIndex, this.props.shipIndex);
+    this.props.onSave(this.state.value, this.props.playerIndex, this.props.shipIndex, this.props.matchId);
   }
 
 }

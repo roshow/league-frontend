@@ -9,6 +9,7 @@ import MatchActions from './../../actions/MatchActions';
 
 function getStateFromStores() {
   return {
+    matches: MatchStore.getAll(),
     match: MatchStore.getFirst(),
     players: PlayerStore.getAll(),
     scores: ScoreStore.getAll(),
@@ -33,7 +34,7 @@ export default class HomeIndex extends React.Component {
       // console.log('current state of affairs: ', this.state);
   }
   render () {
-    var { match, scores, players } = this.state;
+    var { matches, scores, players } = this.state;
     var scoringTypeInputs = [{
       val: 'official',
       print: 'official'
@@ -62,7 +63,7 @@ export default class HomeIndex extends React.Component {
           {scoringTypeInputs}
         </div>
       </section>
-      <MatchSection match={match} players={players} scores={scores}/>
+      <MatchSection matches={matches} players={players} scores={scores}/>
       <Rankings scores={scores} players={players} />
     </div>
     )
