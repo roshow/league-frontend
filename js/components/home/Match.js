@@ -18,11 +18,14 @@ export default class MatchSection extends React.Component {
     var matches = this.props.matches;
     var players = this.props.players;
 
-    var matchesHtml = matches.map( match => (
+    var matchesHtml = matches.map( (match, match_index) => (
       <ul className="list-group" key={match.id}>
+        <li>
+          <h4 className="text-center">{players[match.players[0].id].name} vs. {players[match.players[1].id].name}</h4>
+        </li>
         { match.players.map( (player, player_index) => (
           <li className="list-group-item" key={player_index} >
-            <h5>{players[player.id].name}</h5>
+            <strong>{players[player.id].name}</strong>
             <ul>
               { player.damage_taken.map( (damage, ship_index) => {
                 var ship = players[player.id].ships[ship_index];
@@ -35,7 +38,7 @@ export default class MatchSection extends React.Component {
                     playerIndex={player_index}
                     shipIndex={ship_index}
                     onSave={this._onDamageRecorded.bind(this)} 
-                  /> (damage) / {ship.damage_cap} (shield + hulls), {ship.points} points{ship.large_base ? ' (large base)' : ''}
+                  /> (damage) / {ship.damage_cap}, {ship.points} points{ship.large_base ? ' (large base)' : ''}
                 </li>
                 )
               })}

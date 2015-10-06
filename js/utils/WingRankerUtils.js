@@ -53,13 +53,14 @@ function calcTournamentPoints (matchPoints) {
 
 function rankScores (scores) {
   return scores.concat().sort(function ({ overall: aOverall},  { overall: bOverall}) {
-    if ( 
-      aOverall.tournament_points > bOverall.tournament_points ||
-      aOverall.mov >= bOverall.mov 
-    ) {
-      return -1;
+    var one = -1;
+    if (aOverall.tournament_points > bOverall.tournament_points) {
+      return one;
     }
-    return 1;
+    else if (aOverall.mov >= bOverall.mov) {
+      return one;
+    }
+    return -1*one;
   });
 }
 
