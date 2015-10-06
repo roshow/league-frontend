@@ -7,9 +7,14 @@ import Rankings from './Rankings';
 import MatchActions from './../../actions/MatchActions';
 
 
-function getStateFromStores() {
+function getStateFromStores(currentRound) {
+  currentRound = currentRound || 0;
+  var matches = MatchStore.getAll();
+  var rounds = [{ id: 0, matches: [0,1] },{ id: 1, matches: [2,3]}];
   return {
-    matches: MatchStore.getAll(),
+    matches,
+    rounds,
+    currentRound,
     match: MatchStore.getFirst(),
     players: PlayerStore.getAll(),
     scores: ScoreStore.getAll(),
@@ -30,11 +35,15 @@ export default class HomeIndex extends React.Component {
         MatchActions.scoringTypeChanged(event.target.value);
       }
 
+      this._roundChange = event => {
+        this.setState(getStateFromStores(event.target.value));
+      }
+
       this.state = getStateFromStores();
       // console.log('current state of affairs: ', this.state);
   }
   render () {
-    var { matches, scores, players } = this.state;
+    var { matches, scores, players, rounds, currentRound } = this.state;
     var scoringTypeInputs = [{
       val: 'official',
       print: 'official'
@@ -56,14 +65,27 @@ export default class HomeIndex extends React.Component {
         />{scoringType.print}
       </label>
     ));
+    var roundTab = this.state.rounds.map( (round, round_index) => (
+      <label key={round.id}>
+        <input type="radio" 
+          name="roundIndex" 
+          value={round.id} 
+          onChange={this._roundChange} 
+        />Round {round.id + 1}
+      </label>
+    ));
+    var roundMatches = rounds[currentRound].matches.map( matchId => matches[matchId] );
     return (
     <div className="container">
       <section>
         <div className="input-group">
           {scoringTypeInputs}
         </div>
+        <div className="input-group">
+          {roundTab}
+        </div>
       </section>
-      <MatchSection matches={matches} players={players} scores={scores}/>
+      <MatchSection matches={roundMatches} players={players} scores={scores}/>
       <Rankings scores={scores} players={players} />
     </div>
     )
