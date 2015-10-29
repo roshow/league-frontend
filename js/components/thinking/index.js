@@ -22,6 +22,7 @@ export default class ThinkingIndex extends React.Component {
 
 	componentDidMount () {
     ThoughtStore.addChangeListener(this._onChange);
+    // get first thought after the component mounts
     ThoughtActions.showRandomThought();
   }
 
@@ -38,7 +39,8 @@ export default class ThinkingIndex extends React.Component {
 		var batStyle = {};
 		if (thought.img) {
 			batStyle = {
-				backgroundImage: 'url(' + thought.img.src + ')'
+				backgroundImage: 'url(' + thought.img.src + ')',
+				backgroundSize: thought.img.scale,
 			};
 		}
 		
