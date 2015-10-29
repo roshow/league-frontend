@@ -3,6 +3,7 @@ import {Route, DefaultRoute} from 'react-router';
 import App from './js/components/app';
 import HomeIndex from './js/components/home/index';
 import ToDoIndex from './js/components/todo/index';
+import ThinkingIndex from './js/components/thinking/index';
 
 export default (
   <Route path='/' handler={App}>
@@ -10,5 +11,7 @@ export default (
     <Route path='todo' handler={ToDoIndex} />
     <Route path='wingranker' handler={HomeIndex} />
     <Route path='wingranker/' handler={HomeIndex} />
+    <Route path='thinking' handler={ThinkingIndex} />
+    <Route path='thinking/' handler={ThinkingIndex} />
   </Route>
 );

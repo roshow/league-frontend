@@ -1,6 +1,7 @@
 import React from 'react';
 import MatchInput from './MatchInput';
 import MatchActions from './../../actions/MatchActions';
+import ThoughtActions from './../../actions/ThoughtActions';
 import WingRankerUtils from './../../utils/WingRankerUtils';
 
 
@@ -56,6 +57,7 @@ export default class MatchSection extends React.Component {
   }
 
   _onDamageRecorded (damage, player, ship, match) {
+    ThoughtActions.showRandomThought();
   	MatchActions.damageRecorded({
   		match,
   		damage,
