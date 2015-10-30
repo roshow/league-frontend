@@ -8,14 +8,7 @@ function dispatchThought (thought={status:'thinking'}) {
 	});
 }
 
-// function showThought (id) {
-// 	ThoughtUtils.getJson(`${ThoughtUtils.apiUrl}/${id}`).then(function ( { docs: [ thought ] } ) {
-// 		console.log('really. ', thought);
-// 	});
-// }
-
 function showThought (id) {
-		// showThought('542f6d113739d18c0c545a36');
 		var url = id ? `${ThoughtUtils.apiUrl}/${id}` : undefined;
     ThoughtUtils.getJson(url).then(function (response) {
     	var thought = response.docs[0];

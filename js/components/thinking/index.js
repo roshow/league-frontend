@@ -18,7 +18,11 @@ export default class ThinkingIndex extends React.Component {
 		this.state = getState();
 		this._onChange = () => {
 			this.setState(getState());
-		}; 
+		};
+		this._randomThought = () => {
+			ThoughtActions.showThought();
+			//would like to change hash without rerendering here.
+		};
 	}
 
 	componentDidMount () {
@@ -38,23 +42,28 @@ export default class ThinkingIndex extends React.Component {
 		};
 		// This is so, so, SO UGLY
 		var batStyle = {};
+		var artSource, artUrl;
 		if (thought.img) {
 			batStyle = {
 				backgroundImage: 'url(' + thought.img.src + ')',
 				backgroundSize: thought.img.scale,
 			};
+			artSource = thought.credit.name;
+			artUrl = thought.credit.link;
 		}
 		
+		
+
 		return (
 		<div className="container">
 			<div className="bat-container">
 		   <div id="thought">
-		      <div id="bkg" className="bubble0" style={batStyle} onClick={ThoughtActions.showRandomThought}>
+		      <div id="bkg" className="bubble0" style={batStyle} onClick={this._randomThought}>
 		      	<img id="batspinner" src="http://roshow.net/public/images/thinkbatman/spinners/batspinner_2.jpg" style={batSpinner}/>
 		      </div>
 		   </div>
 		   <div id="credits">
-		      <p>image: <span><a id="imageCredit" target="_blank">credit name</a></span></p>
+		      <p>image: <span><a id="imageCredit" href={artUrl} target="_blank">{artSource}</a></span></p>
 		      <p className="siteCredits">site by <a href="http://roshow.net" target="_blank">roshow</a></p>
 		      <p className="siteCredits">inspired by <a href="http://roshow.net" target="_blank">calmingmanatee.com</a></p>
 		   </div>
