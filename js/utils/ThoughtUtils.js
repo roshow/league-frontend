@@ -11,7 +11,7 @@ function preloadImg (src) {
  	return new Promise (loadimg);
 }
 
-function getJson (url=`${apiUrl}?random=true`) {
+function getJson (url) {
 	return new Promise(function (res, rej) {
 		var request = new XMLHttpRequest();
 		request.open('GET', url, true);

@@ -8,16 +8,21 @@ function dispatchThought (thought={status:'thinking'}) {
 	});
 }
 
-function showThought (id) {
-		var url = id ? `${ThoughtUtils.apiUrl}/${id}` : undefined;
-    ThoughtUtils.getJson(url).then(function (response) {
-    	var thought = response.docs[0];
-    	ThoughtUtils.preloadImg(thought.img.src).then(function () {
+function showThought (id='?random=true') {
+	
+    ThoughtUtils.getJson( `${ThoughtUtils.apiUrl}/${id}` ).then( function ({ docs: [ thought ] }) {
+
+    	ThoughtUtils.preloadImg( thought.img.src ).then(function () {
+
     		thought.status = 'thought';
-    		dispatchThought(thought);
-    	});
-    });
+    		dispatchThought( thought );
+
+    	} );
+
+    } );
+    
     dispatchThought();
+
 }
 
 export default { showThought };
