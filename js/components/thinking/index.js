@@ -12,8 +12,9 @@ function getState() {
 
 export default class ThinkingIndex extends React.Component {
 	
-	constructor () {
+	constructor ({ params: { thoughtId } } ) {
 		super();
+		this._initThought = thoughtId;
 		this.state = getState();
 		this._onChange = () => {
 			this.setState(getState());
@@ -23,7 +24,7 @@ export default class ThinkingIndex extends React.Component {
 	componentDidMount () {
     ThoughtStore.addChangeListener(this._onChange);
     // get first thought after the component mounts
-    ThoughtActions.showRandomThought();
+    ThoughtActions.showThought(this._initThought);
   }
 
   componentWillUnmount () {

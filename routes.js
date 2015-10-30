@@ -11,7 +11,8 @@ export default (
     <Route path='todo' handler={ToDoIndex} />
     <Route path='wingranker' handler={HomeIndex} />
     <Route path='wingranker/' handler={HomeIndex} />
-    <Route path='thinking' handler={ThinkingIndex} />
-    <Route path='thinking/' handler={ThinkingIndex} />
+    <Route path='thinking' handler={ThinkingIndex}>
+    	<Route path="thought/:thoughtId" handler={ThinkingIndex} />
+    </Route>
   </Route>
 );

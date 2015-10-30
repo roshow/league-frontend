@@ -1,3 +1,6 @@
+var apiUrl = 'http://www.thinkingaboutbatman.com/thought';
+
+
 function preloadImg (src) {
  	function loadimg (res, rej) {
  		var img=new Image();
@@ -8,7 +11,7 @@ function preloadImg (src) {
  	return new Promise (loadimg);
 }
 
-function getJson (url='http://www.thinkingaboutbatman.com/thought?random=true') {
+function getJson (url=`${apiUrl}?random=true`) {
 	return new Promise(function (res, rej) {
 		var request = new XMLHttpRequest();
 		request.open('GET', url, true);
@@ -29,4 +32,4 @@ function getJson (url='http://www.thinkingaboutbatman.com/thought?random=true') 
 }
 
 
-export default { getJson, preloadImg };
+export default { getJson, preloadImg, apiUrl };
