@@ -1,5 +1,6 @@
 import AppDispatcher from './../dispatcher/AppDispatcher';
 import WingRankerConstants from './../constants/WingRankerConstants';
+import Utils from './../utils/EveryoneUtils';
 
 function damageRecorded (event={}) {
 	let payload = Object.assign({
@@ -16,7 +17,22 @@ function scoringTypeChanged (scoringType='official') {
 	});
 }
 
+function dispatchMatchesLoaded (matches=[]) {
+	AppDispatcher.dispatch({
+		type: WingRankerConstants.MATCHES_LOADED,
+		matches,
+	});
+}
+
+function updateMatches (division, week) {
+	Utils.getJson(`${WingRankerConstants.API_URL}/api/division/${division}/matches/${week}`).then(function (matches) {
+		dispatchMatchesLoaded(matches);
+	});
+}
+
+
 export default { 
 	damageRecorded,
 	scoringTypeChanged,
+	updateMatches,
 };

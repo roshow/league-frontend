@@ -54,6 +54,8 @@ var MatchStore = Object.assign({}, EventEmitter.prototype, {
 
 	getSettings: () => settings,
 
+	getMatches: () => matches,
+
 });
 
 

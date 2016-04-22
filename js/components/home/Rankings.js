@@ -1,7 +1,7 @@
 import React from 'react';
 import WingRankerUtils from './../../utils/WingRankerUtils';
 
-export default class MatchSection extends React.Component {
+export default class RankingsSection extends React.Component {
 	constructor () {
 		super();
 	}
