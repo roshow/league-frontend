@@ -12,6 +12,12 @@ function showThought (id='?random=true') {
 	
     ThoughtUtils.getJson( `${ThoughtUtils.apiUrl}/${id}` ).then( function ({ docs: [ thought ] }) {
 
+        dispatchThought({
+            status: 'thinking',
+            _id: thought._id,
+        });
+
+
     	ThoughtUtils.preloadImg( thought.img.src ).then(function () {
 
     		thought.status = 'thought';
@@ -21,7 +27,10 @@ function showThought (id='?random=true') {
 
     } );
     
-    dispatchThought();
+    dispatchThought({
+        status: 'thinking',
+        _id: id,
+    });
 
 }
 

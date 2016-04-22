@@ -83,6 +83,11 @@ MatchStore.dispatchToken = AppDispatcher.register( action => {
       MatchStore.emitChange();
 
       break;
+
+    case WingRankerConstants.MATCHES_LOADED:
+    	matches = action.matches;
+	    MatchStore.emitChange();
+    	break;
   }
 });
 

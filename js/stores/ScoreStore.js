@@ -10,6 +10,7 @@ const CHANGE_EVENT = 'change';
 var matches = MatchStore.getAll();
 var settings = MatchStore.getSettings();
 var players = PlayerStore.getAll();
+let rankings = [];
 
 var scores = players.map( player => ({
   id: player.id,
@@ -88,6 +89,8 @@ var ScoreStore = Object.assign({}, EventEmitter.prototype, {
 
   getAll: () => scores,
 
+  getRankings: () => rankings,
+
 });
 
 
@@ -113,6 +116,14 @@ AppDispatcher.register( action => {
 
       updateAllMatchScores();
 
+      ScoreStore.emitChange();
+
+      break;
+
+    case WingRankerConstants.RANKINGS_CHANGED:
+
+      // updateAllMatchScores();
+      rankings = action.rankings;
       ScoreStore.emitChange();
 
       break;

@@ -17,7 +17,11 @@ export default class ThinkingIndex extends React.Component {
 		this._initThought = thoughtId;
 		this.state = getState();
 		this._onChange = () => {
+			var oldId = this.state.thought._id;
 			this.setState(getState());
+			if (oldId !== this.state.thought._id) {
+				history.pushState({}, '', `/thinking/thought/${this.state.thought._id}`);
+			}
 		};
 		this._randomThought = () => {
 			ThoughtActions.showThought();

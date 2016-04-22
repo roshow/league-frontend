@@ -1,3 +1,4 @@
+'use strict';
 // var dynamicKey = 'foodness';
 // var newObj = {
 //   [dynamicKey]: 'pizza',
@@ -108,3 +109,11 @@ console.log('damage_taken, ', damage_taken);
 
 
 // export default { cart };
+
+var p = Promise.resolve()
+  .then(data => new Promise(function (resolve, reject) {
+    setTimeout(Math.random() > 0.5 ? resolve : reject, 1000)
+  }))
+
+p.then(data => console.log('okay!'))
+p.catch(data => console.log('boo!'))
