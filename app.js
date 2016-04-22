@@ -5,7 +5,9 @@ import React from 'react/addons';
 import Router from 'react-router';
 import routes from './routes';
 
-var app = express();
+let port = process.env.PORT || 3000;
+
+let app = express();
 app.engine('html', hbs({ extname: 'html' }));
 app.set('view engine', 'html');
 app.locals.settings['x-powered-by'] = false;
@@ -13,7 +15,7 @@ app.locals.settings['x-powered-by'] = false;
 app.use(serveStatic('public')); // serve public files
 
 app.use(function router (req, res, next) {
-  var context = {
+  let context = {
     routes: routes,
     location: req.url
   };
@@ -24,4 +26,5 @@ app.use(function router (req, res, next) {
   });
 }); // Use router
 
-app.listen(process.env.PORT || 3000);
+app.listen(port);
+console.log(`FE Server listening on port ${port}`);

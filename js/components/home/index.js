@@ -8,8 +8,7 @@ import Rankings from './Rankings';
 import Matches from './Match';
 
 
-function getStateFromStores(currentRound) {
-  currentRound = currentRound || 0;
+function getStateFromStores() {
   var rounds = [{ id: 0, matches: [0,1] },{ id: 1, matches: [2,3]}];
   return {
     rankings: ScoreStore.getRankings(),
@@ -23,21 +22,21 @@ export default class HomeIndex extends React.Component {
   constructor ({ params: { division, week } }) {
       super();
 
-      this.DIVISION = division;
-      this.WEEK = week;
-
       this._onChange = () => {
         this.setState(getStateFromStores());
       };
 
-      this.state = getStateFromStores();
+      this.state = Object.assign({
+        division: division,
+        week: week,
+      }, getStateFromStores());
       // console.log('current state of affairs: ', this.state);
   }
   render () {
-    let { rankings, matches } = this.state;
+    let { rankings, matches, division, week } = this.state;
     let divisions = ['ultima', 'argent'];
     let divEls = divisions.map( div => {
-      let classes = ( div === this.DIVISION ) ? "active" : "";
+      let classes = ( div === division) ? "active" : "";
       return <li className={classes} key={div}><a href={`/division/${div}`}>{div.toUpperCase()}</a></li>
     });
     // return (
@@ -59,17 +58,18 @@ export default class HomeIndex extends React.Component {
         <ul className="nav nav-tabs">
           {divEls}
         </ul>
-        { this.WEEK ? (<Matches matches={matches} />) : (<Rankings rankings={rankings} />) }
+        { week ? (<Matches matches={matches} />) : (<Rankings rankings={rankings} />) }
       </div>
     )
   }
 
   componentDidMount () {
+    let { division, week } = this.state;
     ScoreStore.addChangeListener(this._onChange);
-    ScoreActions.getRankings(this.DIVISION);
+    ScoreActions.getRankings(division);
     MatchStore.addChangeListener(this._onChange);
-    if (this.WEEK >= 0) { 
-      MatchActions.updateMatches(this.DIVISION, this.WEEK);
+    if (week >= 0) { 
+      MatchActions.updateMatches(division, week);
     }
   }
 
