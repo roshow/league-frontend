@@ -6,7 +6,7 @@
   "scripts": {
     "babel-node": "babel-node --stage 0",
     "start": "build/build-development",
-    "start-prod": "babel-node app"
+    "start-prod": "babel-node --presets es2015 app"
   },
   "author": "",
   "license": "ISC",
