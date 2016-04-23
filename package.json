@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "babel-node": "babel-node --stage 0",
-    "start": "build/build-development"
+    "start": "build/build-development",
+    "start-prod": "babel-node -- app.js"
   },
   "author": "",
   "license": "ISC",
