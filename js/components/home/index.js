@@ -39,21 +39,14 @@ export default class HomeIndex extends React.Component {
       let classes = ( div === division) ? "active" : "";
       return <li className={classes} key={div}><a href={`/division/${div}`}>{div.toUpperCase()}</a></li>
     });
-    // return (
-    //   <div className="container">
-    //     <div>
-    //       <img src="/images/nycxleague_banner_750.jpg" />
-    //     </div>
-    //     <ul className="nav nav-tabs">
-    //       {divEls}
-    //     </ul>
-    //     <Rankings rankings={rankings} />
-    //   </div>
-    // )
+    let headerImgStyles = {
+      width: '100%',
+      maxWidth: '750px'
+    };
     return (
       <div className="container">
         <div>
-          <img src="/images/nycxleague_banner_750.jpg" />
+          <img src="/images/nycxleague_banner_750.jpg" style={headerImgStyles}/>
         </div>
         <ul className="nav nav-tabs">
           {divEls}
