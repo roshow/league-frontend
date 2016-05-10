@@ -6,7 +6,8 @@ import HomeIndex from './js/components/home/index';
 export default (
   <Route path='/' handler={App}>
     <DefaultRoute handler={HomeIndex} />
-    <Route path="division/:division" handler={HomeIndex} />
-    <Route path="division/:division/week/:week" handler={HomeIndex} />
+    <Route path="division/:division" handler={HomeIndex}>
+    	<Route path="week/:week" handler={HomeIndex} />
+  	</Route>
   </Route>
 );

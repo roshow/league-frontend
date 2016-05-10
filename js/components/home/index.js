@@ -59,10 +59,12 @@ export default class HomeIndex extends React.Component {
   componentDidMount () {
     let { division, week } = this.state;
     ScoreStore.addChangeListener(this._onChange);
-    ScoreActions.getRankings(division);
     MatchStore.addChangeListener(this._onChange);
     if (week >= 0) { 
       MatchActions.updateMatches(division, week);
+    }
+    else {
+      ScoreActions.getRankings(division);
     }
   }
 
