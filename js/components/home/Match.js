@@ -14,9 +14,10 @@ export default class MatchSection extends React.Component {
     let matchScores = matches.map( match => (
           <ul className="list-group" key={match.match_id}>
             {
-                match.players.map( ({ name, destroyed }) => (
-                    <li className="list-group-item" key={name}><span>{players[name].print_name}</span><span className="pull-right">{destroyed}</span></li>
-                ))
+                match.players.map( function ({ name, destroyed }) {
+                    let player = players[name];
+                    return ( <li className="list-group-item" key={name}><span>{player.print_name}</span><span className="pull-right">{destroyed}</span></li> );
+                })
             }
           </ul>
     ));
