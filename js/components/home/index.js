@@ -53,7 +53,7 @@ export default class HomeIndex extends React.Component {
         <ul className="nav nav-tabs">
           {divEls}
         </ul>
-        { week ? (<Matches matches={matches} players={players} />) : (<Rankings rankings={rankings} />) }
+        { week ? (<Matches matches={matches} players={players} />) : (<Rankings rankings={rankings} players={players}/>) }
       </div>
     )
   }

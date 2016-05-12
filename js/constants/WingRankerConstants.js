@@ -10,6 +10,6 @@ const wingranker_constants = Object.assign({
 	  RANKINGS_CHANGED: null,
 }));
 
-// wingranker_constants.API_URL = 'http://localhost:9000';
+wingranker_constants.API_URL = 'http://localhost:9000';
 
 export default wingranker_constants;

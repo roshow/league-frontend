@@ -7,12 +7,12 @@ export default class RankingsSection extends React.Component {
 	}
 
 	render () {
-		let { rankings } = this.props;
+		let { rankings, players } = this.props;
 		let _tableStyles = {};
 
 		let playerScores = rankings.map( (player) => (
 		  <tr key={player.name}>
-		    <td>{player.print_name}</td>
+		    <td>{players[player.name].print_name}</td>
 		    <td>{player.lp}</td>
 		    <td>{player.mov}</td>
 		    <td>{player.games_played}</td>
