@@ -3,7 +3,9 @@ import hbs from 'express-handlebars';
 import serveStatic from 'serve-static';
 import React from 'react/addons';
 import Router from 'react-router';
+import request from 'request';
 import routes from './routes';
+
 
 let port = process.env.PORT || 3000;
 
@@ -20,9 +22,12 @@ app.use(function router (req, res, next) {
     location: req.url
   };
   Router.create(context).run(function ran (Handler, state) {
-    res.render('layout', {
-      reactHtml: React.renderToString(<Handler />)
-    });
+  	request('http://localhost:9000/api/players', function (error, response, body) {
+		    res.render('layout', {
+		      reactHtml: React.renderToString(<Handler data={body} />),
+		      players: body
+		    });
+		  });
   });
 }); // Use router
 

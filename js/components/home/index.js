@@ -6,6 +6,7 @@ import MatchStore from './../../stores/MatchStore';
 import MatchActions from './../../actions/MatchActions';
 import Rankings from './Rankings';
 import Matches from './Match';
+import WingRankerConstants from './../../constants/WingRankerConstants';
 
 
 function getStateFromStores() {
@@ -29,11 +30,12 @@ export default class HomeIndex extends React.Component {
       this.state = Object.assign({
         division: division,
         week: week,
+        players: {},
       }, getStateFromStores());
       // console.log('current state of affairs: ', this.state);
   }
   render () {
-    let { rankings, matches, division, week } = this.state;
+    let { rankings, matches, division, week, players } = this.state;
     let divisions = ['ultima', 'argent'];
     let divEls = divisions.map( div => {
       let classes = ( div === division) ? "active" : "";
@@ -51,13 +53,19 @@ export default class HomeIndex extends React.Component {
         <ul className="nav nav-tabs">
           {divEls}
         </ul>
-        { week ? (<Matches matches={matches} />) : (<Rankings rankings={rankings} />) }
+        { week ? (<Matches matches={matches} players={players} />) : (<Rankings rankings={rankings} />) }
       </div>
     )
   }
 
   componentDidMount () {
     let { division, week } = this.state;
+    // this.state.players = window.PLAYERS;
+    // console.log(window.PLAYERS);
+    this.setState({
+      players: window.PLAYERS
+    })
+    this.setState({ players: window.PLAYERS });
     ScoreStore.addChangeListener(this._onChange);
     MatchStore.addChangeListener(this._onChange);
     if (week >= 0) { 
@@ -70,6 +78,6 @@ export default class HomeIndex extends React.Component {
 
   componentWillUnmount () {
     ScoreStore.removeChangeListener(this._onChange);  
-    MatchStore.removeChangeListener(this._onChange);  
+    MatchStore.removeChangeListener(this._onChange);
   }
 }

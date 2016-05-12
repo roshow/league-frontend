@@ -2,7 +2,6 @@ import keyMirror from 'keymirror';
 
 const wingranker_constants = Object.assign({
 		API_URL: 'https://nycxwing-league-api.herokuapp.com'
-		// API_URL: 'http://localhost:9000'
 	},
 	keyMirror({
 	  DAMAGE_RECORDED: null,
@@ -10,5 +9,7 @@ const wingranker_constants = Object.assign({
 	  MATCHES_LOADED: null,
 	  RANKINGS_CHANGED: null,
 }));
+
+wingranker_constants.API_URL = 'http://localhost:9000';
 
 export default wingranker_constants;

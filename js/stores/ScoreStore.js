@@ -7,73 +7,10 @@ import EventEmitter from 'events';
 
 const CHANGE_EVENT = 'change';
 
-var matches = MatchStore.getAll();
-var settings = MatchStore.getSettings();
-var players = PlayerStore.getAll();
 let rankings = [];
 
-var scores = players.map( player => ({
-  id: player.id,
-  overall: {
-    tournament_points: 0,
-    mov: 0,
-    sos: 0,
-  },
-  matches: {},
-}) );
 
-function updateMatchScore (matchId) {
-  
-  var match = matches[matchId];
-  var matchPoints = WingRankerUtils.calcMatchPoints(match, players, settings.scoringType);
-  var mov = WingRankerUtils.calcMov(matchPoints);
-  var tournamentPoints = WingRankerUtils.calcTournamentPoints(matchPoints);
-
-  match.players.forEach( (player, index) => {
-    
-    scores[player.id].matches[matchId] = {
-      mov: mov[index],
-      tournament_points: tournamentPoints[index],
-      opponent: match.players[ (index === 0) ? 1 : 0 ].id,
-    };
-
-    updatePlayerOverall(player.id);
-  });
-
-  setSoSes();
-
-}
-
-function setSoSes () {
-  scores = scores.map( player => {
-    var playerMatches = player.matches;
-    player.overall.sos = Object.keys(playerMatches).reduce( (sos, matchId) => {
-      return scores[playerMatches[matchId].opponent].overall.tournament_points + sos
-    }, 0);
-    return player;
-  });
-}
-
-function updatePlayerOverall (playerId) {
-  var player = scores[playerId];
-  var overall = Object.keys(player.matches).reduce( (combined, key) => {
-    var match = player.matches[key];
-    combined.tournament_points += match.tournament_points;
-    combined.mov += match.mov;
-    return combined;
-  }, {
-    tournament_points: 0,
-    mov: 0,
-  });
-  player.overall = overall;
-}
-
-function updateAllMatchScores () {
-  Object.keys(matches).forEach(updateMatchScore);
-}
-
-
-var ScoreStore = Object.assign({}, EventEmitter.prototype, {
+let ScoreStore = Object.assign({}, EventEmitter.prototype, {
 
   emitChange () {
     this.emit(CHANGE_EVENT);
@@ -97,32 +34,9 @@ var ScoreStore = Object.assign({}, EventEmitter.prototype, {
 AppDispatcher.register( action => {
 
   switch(action.type) {
-    case WingRankerConstants.DAMAGE_RECORDED:
-
-      AppDispatcher.waitFor([MatchStore.dispatchToken]);
-      matches = MatchStore.getAll();
-      
-      updateMatchScore(action.match);
-
-      ScoreStore.emitChange();
-
-      break;
-
-    case WingRankerConstants.SCORINGTYPE_CHANGED:
-
-      AppDispatcher.waitFor([MatchStore.dispatchToken]);
-      
-      settings = MatchStore.getSettings();
-
-      updateAllMatchScores();
-
-      ScoreStore.emitChange();
-
-      break;
 
     case WingRankerConstants.RANKINGS_CHANGED:
 
-      // updateAllMatchScores();
       rankings = action.rankings;
       ScoreStore.emitChange();
 
