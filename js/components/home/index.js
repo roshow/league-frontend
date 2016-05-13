@@ -29,7 +29,7 @@ export default class HomeIndex extends React.Component {
 
       this.state = Object.assign({
         division: division,
-        week: week,
+        week: parseInt(week, 10),
         players: {},
       }, getStateFromStores());
       // console.log('current state of affairs: ', this.state);
@@ -45,16 +45,35 @@ export default class HomeIndex extends React.Component {
       width: '100%',
       maxWidth: '750px'
     };
+    let weekNavStyles = {
+      display: week ? 'block' : 'none'
+    };
     return (
-      <div className="container">
-        <div>
-          <img src="/images/nycxleague_banner_750.jpg" style={headerImgStyles}/>
+      <section>
+        <div className="container">
+          <div>
+            <img src="/images/nycxleague_banner_750.jpg" style={headerImgStyles}/>
+          </div>
+          <ul className="nav nav-pills pull-left">
+            {divEls}
+          </ul>
+          <ul className="nav nav-pills pull-right">
+            <li><a href={`/division/${division}`} >Standings</a></li>
+            <li><a href={`/division/${division}/week/1`} >Schedule</a></li>
+          </ul>
+          <ul className="nav nav-pills pull-left" style={weekNavStyles}>
+          { 
+            [1,2,3,4,5,6,7].map( weekNo => {
+              let className = weekNo ===  week ? "active" : "";
+              return <li className={className} key={`week${weekNo}`}><a href={`/division/${division}/week/${weekNo}`} >Week {weekNo}</a></li>
+            })
+          }
+          </ul>
         </div>
-        <ul className="nav nav-tabs">
-          {divEls}
-        </ul>
-        { week ? (<Matches matches={matches} players={players} />) : (<Rankings rankings={rankings} players={players}/>) }
-      </div>
+        <div className="container">
+          { week ? (<Matches matches={matches} players={players} />) : (<Rankings rankings={rankings} players={players}/>) }
+        </div>
+      </section>
     )
   }
 
