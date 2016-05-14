@@ -11,13 +11,20 @@
 		}
 		.container {
 		    max-width: 750px;
+		    margin-bottom: 10px;
+		}
+		.header-image {
+			width: 100%;
+		}
+		.matches-container {
+			width: 370px;
 		}
 	</style>
 	<script type="text/javascript">
 		(function (w) {
-			let playerArr = {{{players}}};
-			let playerObj = {};
-			for (let i = playerArr.length; i-- ;) {
+			var playerArr = {{{players}}};
+			var playerObj = {};
+			for (var i = playerArr.length; i-- ;) {
 				playerObj[playerArr[i].name] = playerArr[i];
 			}
 			w.PLAYERS = playerObj;

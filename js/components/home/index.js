@@ -41,19 +41,17 @@ export default class HomeIndex extends React.Component {
       let classes = ( div === division) ? "active" : "";
       return <li className={classes} key={div}><a href={`/division/${div}`}>{div.toUpperCase()}</a></li>
     });
-    let headerImgStyles = {
-      width: '100%',
-      maxWidth: '750px'
-    };
     let weekNavStyles = {
       display: week ? 'block' : 'none'
     };
+    let mainContainerClasses ='container';
+    mainContainerClasses += (week ? ' matches-container' : '');
     return (
       <section>
         <div className="container">
-          <div>
-            <img src="/images/nycxleague_banner_750.jpg" style={headerImgStyles}/>
-          </div>
+          <img className="header-image" src="/images/nycxleague_banner_750.jpg" />
+        </div>
+        <div className="container">
           <ul className="nav nav-pills pull-left">
             {divEls}
           </ul>
@@ -70,7 +68,7 @@ export default class HomeIndex extends React.Component {
           }
           </ul>
         </div>
-        <div className="container">
+        <div className={mainContainerClasses}>
           { week ? (<Matches matches={matches} players={players} />) : (<Rankings rankings={rankings} players={players}/>) }
         </div>
       </section>
