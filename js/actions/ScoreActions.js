@@ -10,7 +10,7 @@ function dispatchMatchesLoaded (rankings) {
 }
 
 function getRankings (division) {
-	Utils.getJson(`${WingRankerConstants.API_URL}/api/rankings/${division}`).then(function (rankings) {
+	Utils.getJson(`${WingRankerConstants.API_URL}/api/rankings/season/1/division/${division}`).then(function (rankings) {
 		dispatchMatchesLoaded(rankings);
 	});
 }

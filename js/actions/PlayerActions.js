@@ -10,9 +10,15 @@ function dispatchMatchesLoaded (players) {
 }
 
 function getPlayers () {
-	Utils.getJson(`${WingRankerConstants.API_URL}/api/players`).then(function (players) {
+	let players = sessionStorage.getItem('players');
+	if (!players) {
+		Utils.getJson(`${WingRankerConstants.API_URL}/api/players`).then(function (response) {
+			dispatchPlayersLoaded(response);
+		});
+	}
+	else {
 		dispatchPlayersLoaded(players);
-	});
+	}
 }
 
 export default { getPlayers };

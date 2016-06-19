@@ -3,6 +3,6 @@ import {RouteHandler} from 'react-router';
 
 export default class App extends React.Component {
   render () {
-    return <RouteHandler data={this.props.data}/>
+    return <RouteHandler />
   }
 };

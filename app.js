@@ -5,7 +5,9 @@ import React from 'react/addons';
 import Router from 'react-router';
 import request from 'request';
 import routes from './routes';
+import SHARED from './js/sharedConstants';
 
+const APIURL = SHARED.APIURL;
 
 let port = process.env.PORT || 3000;
 
@@ -22,7 +24,7 @@ app.use(function router (req, res, next) {
     location: req.url
   };
   Router.create(context).run(function ran (Handler, state) {
-  	request('https://nycxwing-league-api.herokuapp.com/api/players', function (error, response, body) {
+  	request(`${APIURL}/api/players`, function (error, response, body) {
 		    res.render('layout', {
 		      reactHtml: React.renderToString(<Handler data={body} />),
 		      players: body

@@ -8,30 +8,30 @@ export default class MatchSection extends React.Component {
 	}
 
 	render () {
-    let { matches, players } = this.props;
-    let _tableStyles = {};
+        let { matches, players } = this.props;
+        let _tableStyles = {};
 
-    let matchScores = matches.map( match => (
-          <ul className="list-group" key={match.match_id}>
-            {
-                match.players.map( function ({ name, destroyed }) {
-                    let player = players[name];
-                    return ( <li className="list-group-item" key={name}><span>{player.print_name}</span><span className="pull-right">{destroyed}</span></li> );
-                })
-            }
-          </ul>
-    ));
+        let matchScores = matches.map( match => (
+              <ul className="list-group" key={match.match_id}>
+                {
+                    match.players.map( function ({ name, destroyed }) {
+                        let player = players[name];
+                        return ( <li className="list-group-item" key={name}><span>{player.print_name}</span><span className="pull-right">{destroyed}</span></li> );
+                    })
+                }
+              </ul>
+        ));
 
-    return (<div>{matchScores}</div>);
-    // <table className="table" style={_tableStyles}>
-    //   <thead>
-    //     <tr>
-    //       <th></th>
-    //     </tr>
-    //   </thead>
-    //   <tbody>
-    //     {matchScores}
-    //   </tbody>
-    // </table>);
-  }
+        return (<div>{matchScores}</div>);
+        // <table className="table" style={_tableStyles}>
+        //   <thead>
+        //     <tr>
+        //       <th></th>
+        //     </tr>
+        //   </thead>
+        //   <tbody>
+        //     {matchScores}
+        //   </tbody>
+        // </table>);
+    }
 }
