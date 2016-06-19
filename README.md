@@ -1,3 +1,3 @@
-# universaljs
-playing around with universal js concepts and es6
+# NYC X-Wing League Website
+Universal JS project
 
