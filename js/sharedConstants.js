@@ -1,5 +1,5 @@
-const APIURL = 'https://nycxwing-league-api.herokuapp.com';
-// const APIURL = 'http://localhost:9000';
+let APIURL = 'https://nycxwing-league-api.herokuapp.com';
+APIURL = 'http://localhost:9000';
 
 export default {
 	APIURL,

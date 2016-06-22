@@ -20,7 +20,7 @@ function getStateFromStores() {
 
 
 export default class HomeIndex extends React.Component {
-  constructor ({ params: { division, week } }) {
+  constructor ({ params: { division, week, season} }) {
       super();
 
       this._onChange = () => {
@@ -29,6 +29,7 @@ export default class HomeIndex extends React.Component {
 
       this.state = Object.assign({
         division: division,
+        season: parseInt(season, 10),
         week: parseInt(week, 10),
         players: {},
       }, getStateFromStores());
@@ -76,7 +77,7 @@ export default class HomeIndex extends React.Component {
   }
 
   componentDidMount () {
-    let { division, week } = this.state;
+    let { division, week, season } = this.state;
     // this.state.players = window.PLAYERS;
     // console.log(window.PLAYERS);
     this.setState({
@@ -86,7 +87,7 @@ export default class HomeIndex extends React.Component {
     ScoreStore.addChangeListener(this._onChange);
     MatchStore.addChangeListener(this._onChange);
     if (week >= 0) { 
-      MatchActions.updateMatches(division, week);
+      MatchActions.updateMatches(division, week, season);
     }
     else {
       ScoreActions.getRankings(division);

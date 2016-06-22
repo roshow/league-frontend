@@ -24,8 +24,8 @@ function dispatchMatchesLoaded (matches=[]) {
 	});
 }
 
-function updateMatches (division, week) {
-	Utils.getJson(`${WingRankerConstants.API_URL}/api/matches/division/${division}/season/1/week/${week}`).then(function (matches) {
+function updateMatches (division, week, season=2) {
+	Utils.getJson(`${WingRankerConstants.API_URL}/api/matches/division/${division}/season/${season}/week/${week}`).then(function (matches) {
 		dispatchMatchesLoaded(matches);
 	});
 }

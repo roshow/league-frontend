@@ -12,27 +12,6 @@ var settings = {
 	scoringType: 'official',
 };
 
-// var makePlayer = player => ({
-// 	id: player.id,
-// 	name: 'player ' + player.id,
-// 	damage_taken: Array.from(player.ships, ship => 0)
-// });
-
-// function newMatch (...matchPlayers) {
-// 	var match = {
-// 		points: [0, 0],
-// 		players: Array.from(matchPlayers, makePlayer)
-// 	};
-// 	match.id = matches.length; // id is index array for now.
-// 	matches.push(match);
-// 	return match;
-// }
-
-// // create a couple of matches right away, just to keep things interesting...
-// newMatch(players[0],players[1]);
-// newMatch(players[2],players[3]);
-// newMatch(players[1],players[3]);
-// newMatch(players[0],players[2]);
 
 var MatchStore = Object.assign({}, EventEmitter.prototype, {
 
