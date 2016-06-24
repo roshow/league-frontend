@@ -38,9 +38,14 @@ export default class HomeIndex extends React.Component {
   render () {
     let { rankings, matches, division, week, players, season } = this.state;
     let divisions = ['argent', 'ultima'];
+    let seasonEls = [1, 2].map( seasonNo => {
+      let classes = ( seasonNo === season) ? "active" : "";
+      let targetUrl = week ? `/division/${division}/season/${seasonNo}/week/${week}` : `/rankings/division/${division}/season/${seasonNo}`;
+      return <li className={classes} key={'sN' + seasonNo}><a href={targetUrl}>SEASON {seasonNo}</a></li>
+    });
     let divEls = divisions.map( div => {
       let classes = ( div === division) ? "active" : "";
-      return <li className={classes} key={div}><a href={`/rankings/division/${division}/season/1`}>{div.toUpperCase()}</a></li>
+      return <li className={classes} key={div}><a href={`/rankings/division/${div}/season/${season}`}>{div.toUpperCase()}</a></li>
     });
     let weekNavStyles = {
       display: week ? 'block' : 'none'
@@ -53,6 +58,9 @@ export default class HomeIndex extends React.Component {
           <img className="header-image" src="/images/nycxleague_banner_750.jpg" />
         </div>
         <div className="container">
+          <ul className="nav nav-pills pull-left">
+            {seasonEls}
+          </ul>
           <ul className="nav nav-pills pull-left">
             {divEls}
           </ul>
