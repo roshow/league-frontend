@@ -61,6 +61,8 @@ export default class HomeIndex extends React.Component {
           <ul className="nav nav-pills pull-left">
             {seasonEls}
           </ul>
+        </div>
+        <div className="container">
           <ul className="nav nav-pills pull-left">
             {divEls}
           </ul>
