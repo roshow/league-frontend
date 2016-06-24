@@ -36,11 +36,11 @@ export default class HomeIndex extends React.Component {
       // console.log('current state of affairs: ', this.state);
   }
   render () {
-    let { rankings, matches, division, week, players } = this.state;
-    let divisions = ['ultima', 'argent'];
+    let { rankings, matches, division, week, players, season } = this.state;
+    let divisions = ['argent', 'ultima'];
     let divEls = divisions.map( div => {
       let classes = ( div === division) ? "active" : "";
-      return <li className={classes} key={div}><a href={`/division/${div}`}>{div.toUpperCase()}</a></li>
+      return <li className={classes} key={div}><a href={`/rankings/division/${division}/season/1`}>{div.toUpperCase()}</a></li>
     });
     let weekNavStyles = {
       display: week ? 'block' : 'none'
@@ -57,14 +57,14 @@ export default class HomeIndex extends React.Component {
             {divEls}
           </ul>
           <ul className="nav nav-pills pull-right">
-            <li><a href={`/division/${division}`} >Standings</a></li>
-            <li><a href={`/division/${division}/week/1`} >Schedule</a></li>
+            <li className={ !week ? 'active' : '' } ><a href={`/rankings/division/${division}/season/${season}`}>Standings</a></li>
+            <li className={ week ? 'active' : '' } ><a href={`/division/${division}/season/${season}/week/1`}>Schedule</a></li>
           </ul>
           <ul className="nav nav-pills pull-left" style={weekNavStyles}>
           { 
             [1,2,3,4,5,6,7].map( weekNo => {
               let className = weekNo ===  week ? "active" : "";
-              return <li className={className} key={`week${weekNo}`}><a href={`/division/${division}/week/${weekNo}`} >Week {weekNo}</a></li>
+              return <li className={className} key={`week${weekNo}`}><a href={`/division/${division}/season/${season}/week/${weekNo}`} >Week {weekNo}</a></li>
             })
           }
           </ul>
@@ -90,7 +90,7 @@ export default class HomeIndex extends React.Component {
       MatchActions.updateMatches(division, week, season);
     }
     else {
-      ScoreActions.getRankings(division);
+      ScoreActions.loadRankings(division, season);
     }
   }
 

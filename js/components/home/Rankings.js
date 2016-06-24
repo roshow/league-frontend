@@ -10,14 +10,16 @@ export default class RankingsSection extends React.Component {
 		let { rankings, players } = this.props;
 		let _tableStyles = {};
 
-		let playerScores = rankings.map( (player) => (
-		  <tr key={player.name}>
-		    <td>{players[player.name].print_name}</td>
-		    <td>{player.lp}</td>
-		    <td>{player.mov}</td>
-		    <td>{player.games_played}</td>
-		  </tr>
-		));
+		let playerScores = rankings.map( (player) => {
+			return (
+			  <tr key={player.name}>
+			    <td>{players[player.name].print_name}</td>
+			    <td>{player.lp}</td>
+			    <td>{player.mov}</td>
+			    <td>{player.games_played}</td>
+			  </tr>
+			);
+		});
 
 		return (
 		<table className="table" style={_tableStyles}>

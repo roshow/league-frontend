@@ -25,6 +25,7 @@ app.use(function router (req, res, next) {
   };
   Router.create(context).run(function ran (Handler, state) {
   	request(`${APIURL}/api/players`, function (error, response, body) {
+        console.log(body);
 		    res.render('layout', {
 		      reactHtml: React.renderToString(<Handler data={body} />),
 		      players: body

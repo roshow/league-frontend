@@ -9,10 +9,10 @@ function dispatchMatchesLoaded (rankings) {
 	});
 }
 
-function getRankings (division) {
-	Utils.getJson(`${WingRankerConstants.API_URL}/api/rankings/season/1/division/${division}`).then(function (rankings) {
+function loadRankings (division, season) {
+	Utils.getJson(`${WingRankerConstants.API_URL}/api/rankings/season/${season}/division/${division}`).then(function (rankings) {
 		dispatchMatchesLoaded(rankings);
 	});
 }
 
-export default { getRankings };
+export default { loadRankings };
