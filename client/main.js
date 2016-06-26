@@ -1,9 +1,7 @@
-import React from 'react/addons';
-import Router from 'react-router';
+import React from 'react';
+import { render } from 'react-dom'
+import { Router, browserHistory } from 'react-router';
 import routes from '../routes';
 
 var main = document.getElementsByTagName('main')[0];
-
-Router.run(routes, Router.HistoryLocation, function ran (Handler, state) {
-  React.render(<Handler />, main);
-});
+render(<Router history={browserHistory} routes={routes} />, main);

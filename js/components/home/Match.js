@@ -23,15 +23,5 @@ export default class MatchSection extends React.Component {
         ));
 
         return (<div>{matchScores}</div>);
-        // <table className="table" style={_tableStyles}>
-        //   <thead>
-        //     <tr>
-        //       <th></th>
-        //     </tr>
-        //   </thead>
-        //   <tbody>
-        //     {matchScores}
-        //   </tbody>
-        // </table>);
     }
 }
