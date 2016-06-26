@@ -9,9 +9,12 @@ export default class Banner extends React.Component {
 		const season = this.props.season;
 		let imgUrl;
 		switch (season) {
+			case "2":
+				imgUrl = "/images/nycxleague_banner_2_750.jpg";
+				break;
 			default:
 				imgUrl = "/images/nycxleague_banner_750.jpg";
-				break
+				break;
 		}
 		return (
 			<div className="container">
