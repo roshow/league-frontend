@@ -1,17 +1,11 @@
 import React from 'react';
-import {Route, DefaultRoute} from 'react-router';
+import {Router, Route} from 'react-router';
 import App from './js/components/app';
 import HomeIndex from './js/components/home/index';
 
 export default (
-  <Route path='/' handler={App}>
-    <DefaultRoute handler={HomeIndex} />
-    <Route path="rankings/division/:division/season/:season" handler={HomeIndex}/>
-    <Route path="schedule/division/:division/season/:season/week/:week" handler={HomeIndex}/>
-    <Route path="division/:division" handler={HomeIndex}>
-    	<Route path="season/:season" handler={HomeIndex} >
-    		<Route path="week/:week" handler={HomeIndex} />
-  		</Route>
-  	</Route>
+	 <Route path="/" component={HomeIndex}>
+    <Route path="rankings/:division/season/:season" component={HomeIndex}/>
+		<Route path="schedule/:division/season/:season/week/:week" component={HomeIndex}/>
   </Route>
 );
