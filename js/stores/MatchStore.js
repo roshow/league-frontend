@@ -1,12 +1,10 @@
 import WingRankerConstants from './../constants/WingRankerConstants';
 import WingRankerUtils from './../utils/WingRankerUtils.js';
 import AppDispatcher from './../dispatcher/AppDispatcher';
-import PlayerStore from './PlayerStore';
 import EventEmitter from 'events';
 
 const CHANGE_EVENT = 'change';
 
-// var players = PlayerStore.getAll();
 var matches = [];
 var settings = {
 	scoringType: 'official',

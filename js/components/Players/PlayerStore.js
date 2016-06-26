@@ -1,8 +1,10 @@
-import WingRankerConstants from './../constants/WingRankerConstants';
-import AppDispatcher from './../dispatcher/AppDispatcher';
+import WingRankerConstants from './../../constants/WingRankerConstants';
+import AppDispatcher from './../../dispatcher/AppDispatcher';
 import EventEmitter from 'events';
 
-let players = {};
+let window = window;
+let players = window ? window.PLAYERS : {};
+console.log('players: ', players);
 
 var PlayerStore = Object.assign({}, EventEmitter.prototype, {
 
@@ -17,7 +19,7 @@ var PlayerStore = Object.assign({}, EventEmitter.prototype, {
   },
 
   removeChangeListener (callback) {
-    this.removeListener(CHANGE_EVENT, callback);
+    this.removeListener(WingRankerConstants.CHANGE_EVENT, callback);
   }
 
 });

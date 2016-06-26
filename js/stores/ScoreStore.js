@@ -1,7 +1,6 @@
 import WingRankerConstants from './../constants/WingRankerConstants';
 import WingRankerUtils from './../utils/WingRankerUtils.js';
 import AppDispatcher from './../dispatcher/AppDispatcher';
-import PlayerStore from './PlayerStore';
 import MatchStore from './MatchStore.js';
 import EventEmitter from 'events';
 

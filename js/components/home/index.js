@@ -1,10 +1,10 @@
 import React from 'react';
-import PlayerStore from './../../stores/PlayerStore';
 import ScoreStore from './../../stores/ScoreStore';
 import ScoreActions from './../../actions/ScoreActions';
 import MatchStore from './../../stores/MatchStore';
 import MatchActions from './../../actions/MatchActions';
 import Banner from './../Banner/Banner';
+import PlayerStore from './../Players/PlayerStore';
 import Nav from './../Nav/Nav';
 import Rankings from './Rankings';
 import Matches from './Match';
@@ -13,7 +13,6 @@ import { Link } from 'react-router';
 
 
 function getStateFromStores() {
-  var rounds = [{ id: 0, matches: [0,1] },{ id: 1, matches: [2,3]}];
   return {
     rankings: ScoreStore.getRankings(),
     matches: MatchStore.getMatches()
@@ -24,18 +23,25 @@ function getStateFromStores() {
 
 export default class HomeIndex extends React.Component {
   constructor ({ params: { division, week, season} }) {
+      console.log(season);
       super();
-
       this._onChange = () => {
-        this.setState(getStateFromStores());
+        this.setState(this.getState());
       };
-
       this.state = Object.assign({
-        division: division,
-        season: parseInt(season, 10),
+        division: division || 'argent',
+        season: parseInt(season || 1, 10),
         week: parseInt(week, 10),
         players: {},
-      }, getStateFromStores());
+      }, this.getState());
+  }
+
+  getState () {
+    return {
+      rankings: ScoreStore.getRankings(),
+      matches: MatchStore.getMatches(),
+    };
+
   }
   render () {
     const { rankings, matches, division, week, players, season } = this.state;
@@ -54,12 +60,7 @@ export default class HomeIndex extends React.Component {
 
   componentDidMount () {
     let { division, week, season } = this.state;
-    // this.state.players = window.PLAYERS;
-    // console.log(window.PLAYERS);
-    this.setState({
-      players: window.PLAYERS
-    })
-    this.setState({ players: window.PLAYERS });
+    this.state.players = window.PLAYERS;
     ScoreStore.addChangeListener(this._onChange);
     MatchStore.addChangeListener(this._onChange);
     if (week >= 0) { 
@@ -81,7 +82,6 @@ export default class HomeIndex extends React.Component {
     else {
       ScoreActions.loadRankings(division, season);
     }
-    // this.setState(this.getStateFromStore(nextProps))
   }
 
   componentWillUnmount () {

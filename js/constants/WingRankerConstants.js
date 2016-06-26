@@ -3,7 +3,8 @@ import keyMirror from 'keymirror';
 import SHARED from './../sharedConstants';
 
 const wingranker_constants = Object.assign({
-		API_URL: SHARED.APIURL
+		API_URL: SHARED.APIURL,
+		CHANGE_EVENT: 'change',
 	},
 	keyMirror({
 	  DAMAGE_RECORDED: null,
