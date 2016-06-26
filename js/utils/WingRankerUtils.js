@@ -50,9 +50,9 @@ function setSessionCache (data, ...keyData) { //namedata should be type (match, 
 
 function getSessionCache (...keyData) { //namedata should be type (match, rankings), division, season[, week]
   let key = keyData.join('.');
-  let data = veryLocalCache[key] ? JSON.parse(veryLocalCache[key]) : false;
-  // let data = JSON.parse( sessionStorage.getItem(key) );
-  return data ;
+  let dataStr = veryLocalCache[key] || null; 
+  // let dataStr = sessionStorage.getItem(key);
+  return  JSON.parse(dataStr);
 }
 
 export default { calcMatchPoints, setSessionCache, getSessionCache };
