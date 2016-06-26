@@ -39,29 +39,20 @@ function calcMatchPoints (match, players, scoringType='official') {
   return matchpoints;
 }
 
-var calcMov = matchPoints => matchPoints.reduce( (a, b) => {
-  var diff = (a >= b) ? (a - b) : (b - a) * -1;
-  return [100 + diff, 100 - diff];
-});
+let veryLocalCache = {};
+function setSessionCache (data, ...keyData) { //namedata should be type (match, rankings), division, season[, week]
+  let key = keyData.join('.');
+  let dataStr =  JSON.stringify(data);
 
-
-// This is horrible and needs to be refactored
-var calcTPts_oneway = (player, opponent) => ( player > opponent ) ? ( player === 100 || ( player > opponent + 12 ) ? 5 : 3 ) : ( player === opponent ) ? 1 : 0;
-function calcTournamentPoints (matchPoints) {
-  return [calcTPts_oneway(...matchPoints), calcTPts_oneway(matchPoints[1], matchPoints[0])];
+  veryLocalCache[key] = dataStr;
+  // sessionStorage.setItem( key, dataStr );
 }
 
-function rankScores (scores) {
-  return scores.concat().sort(function ({ overall: aOverall},  { overall: bOverall}) {
-    var one = -1;
-    if (aOverall.tournament_points > bOverall.tournament_points) {
-      return one;
-    }
-    else if (aOverall.mov >= bOverall.mov) {
-      return one;
-    }
-    return -1*one;
-  });
+function getSessionCache (...keyData) { //namedata should be type (match, rankings), division, season[, week]
+  let key = keyData.join('.');
+  let data = veryLocalCache[key] ? JSON.parse(veryLocalCache[key]) : false;
+  // let data = JSON.parse( sessionStorage.getItem(key) );
+  return data ;
 }
 
-export default { calcMatchPoints, calcMov, calcTournamentPoints, rankScores };
+export default { calcMatchPoints, setSessionCache, getSessionCache };

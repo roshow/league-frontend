@@ -23,7 +23,6 @@ function getStateFromStores() {
 
 export default class HomeIndex extends React.Component {
   constructor ({ params: { division, week, season} }) {
-      console.log(season);
       super();
       this._onChange = () => {
         this.setState(this.getState());

@@ -4,7 +4,6 @@ import EventEmitter from 'events';
 
 let window = window;
 let players = window ? window.PLAYERS : {};
-console.log('players: ', players);
 
 var PlayerStore = Object.assign({}, EventEmitter.prototype, {
 

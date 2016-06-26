@@ -1,14 +1,8 @@
 import AppDispatcher from './../dispatcher/AppDispatcher';
 import WingRankerConstants from './../constants/WingRankerConstants';
 import Utils from './../utils/EveryoneUtils';
+import WingRankerUtils from './../utils/WingRankerUtils.js';
 
-function damageRecorded (event={}) {
-	let payload = Object.assign({
-	  type: WingRankerConstants.DAMAGE_RECORDED,
-	}, event);
-	AppDispatcher.dispatch(payload);
-	// console.log(payload);
-}
 
 function scoringTypeChanged (scoringType='official') {
 	AppDispatcher.dispatch({
@@ -24,15 +18,20 @@ function dispatchMatchesLoaded (matches=[]) {
 	});
 }
 
-function updateMatches (division, week, season=2) {
-	Utils.getJson(`${WingRankerConstants.API_URL}/api/matches/division/${division}/season/${season}/week/${week}`).then(function (matches) {
-		dispatchMatchesLoaded(matches);
-	});
+function updateMatches (division, week, season) {
+	const cached = WingRankerUtils.getSessionCache(`schedule`, division, season, week);
+	if (cached) {
+		dispatchMatchesLoaded(cached);
+	}
+	else {
+		Utils.getJson(`${WingRankerConstants.API_URL}/api/matches/division/${division}/season/${season}/week/${week}`).then(function (matches) {
+			WingRankerUtils.setSessionCache(matches, `schedule`, division, season, week);
+			dispatchMatchesLoaded(matches);
+		});
+	}
 }
 
 
 export default { 
-	damageRecorded,
-	scoringTypeChanged,
 	updateMatches,
 };
