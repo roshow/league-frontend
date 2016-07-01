@@ -29,7 +29,7 @@ export default class HomeIndex extends React.Component {
       };
       this.state = Object.assign({
         division: division || 'argent',
-        season: parseInt(season || 1, 10),
+        season: parseInt(season || 2, 10),
         week: parseInt(week, 10),
         players: {},
       }, this.getState());
