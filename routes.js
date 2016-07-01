@@ -2,11 +2,13 @@ import React from 'react';
 import {Router, Route, IndexRoute} from 'react-router';
 import App from './js/components/app';
 import HomeIndex from './js/components/home/index';
+import Matches from './js/components/home/Match';
+import Rankings from './js/components/home/Rankings';
 
 export default (
 	 <Route path="/" component={HomeIndex}>
-	 	<IndexRoute component={HomeIndex} />
-    <Route path="rankings/:division/season/:season" component={HomeIndex}/>
-		<Route path="schedule/:division/season/:season/week/:week" component={HomeIndex}/>
+	 	<IndexRoute component={Rankings} />
+    <Route path="rankings/:division/season/:season" component={Rankings}/>
+		<Route path="schedule/:division/season/:season/week/:week" component={Matches}/>
   </Route>
 );
