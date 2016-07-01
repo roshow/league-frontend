@@ -12,15 +12,6 @@ import WingRankerConstants from './../../constants/WingRankerConstants';
 import { Link } from 'react-router';
 
 
-function getStateFromStores() {
-  return {
-    rankings: ScoreStore.getRankings(),
-    matches: MatchStore.getMatches()
-  };
-}
-
-
-
 export default class HomeIndex extends React.Component {
   constructor ({ params: { division, week, season} }) {
       super();
@@ -38,7 +29,7 @@ export default class HomeIndex extends React.Component {
   getState () {
     return {
       rankings: ScoreStore.getRankings(),
-      matches: MatchStore.getMatches(),
+      matches: MatchStore.getMatches()
     };
 
   }
@@ -59,13 +50,13 @@ export default class HomeIndex extends React.Component {
 
   componentDidMount () {
     let { division, week, season } = this.state;
-    this.state.players = window.PLAYERS;
+    this.setState({ players: window.PLAYERS });
     ScoreStore.addChangeListener(this._onChange);
     MatchStore.addChangeListener(this._onChange);
     if (week >= 0) { 
       MatchActions.updateMatches(division, week, season);
     }
-    else {
+    else if (season) {
       ScoreActions.loadRankings(division, season);
     }
   }
@@ -78,7 +69,7 @@ export default class HomeIndex extends React.Component {
     if (week >= 0) { 
       MatchActions.updateMatches(division, week, season);
     }
-    else {
+    else if (season) {
       ScoreActions.loadRankings(division, season);
     }
   }
