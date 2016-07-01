@@ -19,13 +19,10 @@ export default class Nav extends React.Component {
       let classes = ( div === division) ? "active" : "";
       return <li className={classes} key={div}><Link to={`/rankings/${div}/season/${season}`}>{div.toUpperCase()}</Link></li>
     });
-    let weekNavStyles = {
-      display: week ? 'block' : 'none'
-    };
-    const weekEls = [1,2,3,4,5,6,7].map( weekNo => {
-      let className = weekNo ===  week ? "active" : "";
-      return <li className={className} key={`week${weekNo}`}><Link to={`/schedule/${division}/season/${season}/week/${weekNo}`} >Week {weekNo}</Link></li>
-    });
+    // let weekNavStyles = {
+    //   display: week ? 'block' : 'none'
+    // };
+    // const weekEls = 
 
 		return (
 			<nav>
@@ -42,9 +39,21 @@ export default class Nav extends React.Component {
 	          <li className={ !week ? 'active' : '' } ><Link to={`/rankings/${division}/season/${season}`}>Standings</Link></li>
 	          <li className={ week ? 'active' : '' } ><Link to={`/schedule/${division}/season/${season}/week/1`}>Schedule</Link></li>
 	        </ul>
-	        <ul className="nav nav-pills pull-left" style={weekNavStyles}>
-	        	{weekEls}
-	        </ul>
+	        
+	        	{ 
+	        		// only render week elements when needed
+		        	week ? (
+			        	<ul className="nav nav-pills pull-left">
+			        	{
+			        		[1,2,3,4,5,6,7].map( weekNo => {
+							      let className = weekNo ===  week ? "active" : "";
+							      return <li className={className} key={`week${weekNo}`}><Link to={`/schedule/${division}/season/${season}/week/${weekNo}`} >Week {weekNo}</Link></li>
+							    } )
+			        	} 
+			        	</ul>
+		        	) : null
+	        	}
+	        
 	      </div>
       </nav>
 		)
