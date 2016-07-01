@@ -1,4 +1,5 @@
 import React from 'react';
+import MatchStore from './../../stores/MatchStore';
 
 
 
@@ -8,16 +9,15 @@ export default class MatchSection extends React.Component {
 	}
 
 	render () {
-    const { matches, players } = this.props;
-
-    let matchScores = matches.map( match => (
+    const { players } = this.props;
+    const matchScores = MatchStore.getMatches().map( match => (
       <ul className="list-group" key={match.match_id}>
         {
-          match.players.map( function ({ name, destroyed }) {
+          match.players.map( ({ name, destroyed }) => {
             let player = players[name];
             let _style = {};
             if (match.winner === name) {
-              _style['font-weight'] = 'bold';
+              _style.fontWeight = 'bold';
             }
             return ( <li className="list-group-item" key={name} style={_style}><span>{player.print_name}</span><span className="pull-right">{destroyed}</span></li> );
           })

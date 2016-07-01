@@ -1,5 +1,6 @@
 import React from 'react';
 import WingRankerUtils from './../../utils/WingRankerUtils';
+import ScoreStore from './../../stores/ScoreStore';
 
 export default class RankingsSection extends React.Component {
 	constructor () {
@@ -7,10 +8,9 @@ export default class RankingsSection extends React.Component {
 	}
 
 	render () {
-		let { rankings, players } = this.props;
-		let _tableStyles = {};
+		const { players } = this.props;
 
-		let playerScores = rankings.map( (player) => {
+		let playerScores = ScoreStore.getRankings().map( (player) => {
 			return (
 			  <tr key={player.name}>
 			    <td>{players[player.name].print_name}</td>
@@ -22,7 +22,7 @@ export default class RankingsSection extends React.Component {
 		});
 
 		return (
-		<table className="table" style={_tableStyles}>
+		<table className="table">
 			<thead>
 			  <tr>
 			    <th>Player Name</th>

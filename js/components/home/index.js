@@ -51,7 +51,7 @@ export default class HomeIndex extends React.Component {
         <Banner season={season}/>
         <Nav {...this.state} />
         <div className={mainContainerClasses}>
-          { week ? (<Matches matches={matches} players={players} />) : (<Rankings rankings={rankings} players={players}/>) }
+          { week ? (<Matches players={players} />) : (<Rankings players={players}/>) }
         </div>
       </section>
     )
