@@ -35,8 +35,6 @@ export default class HomeIndex extends React.Component {
   }
   render () {
     const { rankings, matches, division, week, players, season } = this.state;
-    let mainContainerClasses ='container';
-    mainContainerClasses += (week ? ' matches-container' : '');
     return (
       <section>
         <Banner season={season}/>
