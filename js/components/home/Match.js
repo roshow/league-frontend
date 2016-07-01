@@ -26,6 +26,6 @@ export default class MatchSection extends React.Component {
       </ul>
     ));
 
-    return (<div>{matchScores}</div>);
+    return (<div className="container matches-container">{matchScores}</div>);
   }
 }

@@ -41,9 +41,9 @@ export default class HomeIndex extends React.Component {
       <section>
         <Banner season={season}/>
         <Nav {...this.state} />
-        <div className={mainContainerClasses}>
+        <section>
           { React.cloneElement(this.props.children, { players: players }) }
-        </div>
+        </section>
       </section>
     )
   }

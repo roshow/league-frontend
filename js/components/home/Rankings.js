@@ -21,19 +21,22 @@ export default class RankingsSection extends React.Component {
 		});
 
 		return (
-		<table className="table">
-			<thead>
-			  <tr>
-			    <th>Player Name</th>
-			    <th>Points</th>
-			    <th>MOV</th>
-			    <th>Games Played</th>
-			  </tr>
-			</thead>
-			<tbody>
-				{playerScores}
-			</tbody>
-		</table>);
+		<div className="container">
+			<table className="table">
+				<thead>
+				  <tr>
+				    <th>Player Name</th>
+				    <th>Points</th>
+				    <th>MOV</th>
+				    <th>Games Played</th>
+				  </tr>
+				</thead>
+				<tbody>
+					{playerScores}
+				</tbody>
+			</table>
+		</div>
+		);
 	}
 }
 
