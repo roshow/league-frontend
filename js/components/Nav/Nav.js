@@ -30,6 +30,7 @@ export default class Nav extends React.Component {
 	        <ul className="nav nav-pills pull-left">
 	          {seasonEls}
 	        </ul>
+	        <a className="btn btn-default active pull-right" href="https://docs.google.com/document/d/1-AXYE46sRZqTRRYZujhrJ-BvSg5bcNnMH0RCEBgUG7o/edit?usp=sharing" role="button">League Info</a>
 	      </div>
 	      <div className="container">
 	        <ul className="nav nav-pills pull-left">
