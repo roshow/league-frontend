@@ -13,11 +13,11 @@ export default class Nav extends React.Component {
     const seasonEls = [1, 2].map( seasonNo => {
       let classes = ( seasonNo === season) ? "active" : "";
       let targetUrl = week ? `/schedule/${division}/season/${seasonNo}/week/${week}` : `/rankings/${division}/season/${seasonNo}`;
-      return <li className={classes} key={'sN' + seasonNo}><Link to={targetUrl}>SEASON {seasonNo}</Link></li>
+      return <li className={classes} key={'sN' + seasonNo}><Link to={targetUrl}>Season {seasonNo}</Link></li>
     });
     const divEls = ['argent', 'ultima'].map( div => {
       let classes = ( div === division) ? "active" : "";
-      return <li className={classes} key={div}><Link to={`/rankings/${div}/season/${season}`}>{div.toUpperCase()}</Link></li>
+      return <li className={classes} key={div}><Link to={`/rankings/${div}/season/${season}`} style={{textTransform: 'capitalize'}}>{div}</Link></li>
     });
     // let weekNavStyles = {
     //   display: week ? 'block' : 'none'
