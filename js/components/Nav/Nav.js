@@ -14,7 +14,7 @@ export default class Nav extends React.Component {
     const seasonEls = [1, 2].map( seasonNo => {
       let classes = ( seasonNo === season) ? "active" : "";
       let targetUrl = week ? `/schedule/${division}/season/${seasonNo}/week/${week}` : `/rankings/${division}/season/${seasonNo}`;
-      return <li className={classes} key={'sN' + seasonNo}><Link to={targetUrl}>SEASON {seasonNo}</Link></li>
+      return <li className={classes} key={'sN' + seasonNo}><Link to={targetUrl}>Season {seasonNo}</Link></li>
     });
 
 		return (
@@ -24,6 +24,7 @@ export default class Nav extends React.Component {
 	          {seasonEls}
 	          <li><Link to="/players">PLAYERS</Link></li>
 	        </ul>
+	        <a className="btn btn-default active pull-right" href="https://docs.google.com/document/d/1-AXYE46sRZqTRRYZujhrJ-BvSg5bcNnMH0RCEBgUG7o/edit?usp=sharing" role="button">League Info</a>
 	      </div>
 	      <Subnav {...this.props} />
       </nav>
