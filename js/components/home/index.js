@@ -40,7 +40,7 @@ export default class HomeIndex extends React.Component {
         <Banner season={season}/>
         <Nav {...this.state} />
         <section>
-          { React.cloneElement(this.props.children, { players: players }) }
+          { React.cloneElement(this.props.children, { ...this.state }) }
         </section>
       </section>
     )
@@ -58,7 +58,7 @@ export default class HomeIndex extends React.Component {
       ScoreActions.loadRankings(division, season);
     }
   }
-  componentWillReceiveProps ({ params: { division, week, season } }) {
+  componentWillReceiveProps ({ params: { division, week, season } }) {   
     this.setState({
       division,
       week,

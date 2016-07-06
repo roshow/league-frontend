@@ -8,7 +8,7 @@ export default class Nav extends React.Component {
 	}
 
 	render () {
-		let { rankings, matches, division='argent', week, players, season=1 } = this.props;
+		let { rankings, matches, division, week, players, season } = this.props;
 		season = parseInt(season, 10);
 		week = parseInt(week, 10);
     const seasonEls = [1, 2].map( seasonNo => {
@@ -26,7 +26,6 @@ export default class Nav extends React.Component {
 	        </ul>
 	        <a className="btn btn-default active pull-right" href="https://docs.google.com/document/d/1-AXYE46sRZqTRRYZujhrJ-BvSg5bcNnMH0RCEBgUG7o/edit?usp=sharing" role="button">League Info</a>
 	      </div>
-	      <Subnav {...this.props} />
       </nav>
 		)
 	}

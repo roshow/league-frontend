@@ -1,6 +1,7 @@
 import React from 'react';
 import WingRankerUtils from './../../utils/WingRankerUtils';
 import ScoreStore from './../../stores/ScoreStore';
+import Subnav from './../Subnav/Subnav';
 
 export default class RankingsSection extends React.Component {
 	constructor () {
@@ -21,21 +22,24 @@ export default class RankingsSection extends React.Component {
 		});
 
 		return (
-		<div className="container">
-			<table className="table">
-				<thead>
-				  <tr>
-				    <th>Player Name</th>
-				    <th>Points</th>
-				    <th>MOV</th>
-				    <th>Games Played</th>
-				  </tr>
-				</thead>
-				<tbody>
-					{playerScores}
-				</tbody>
-			</table>
-		</div>
+			<section>
+				<Subnav {...this.props} />
+				<div className="container">
+					<table className="table">
+						<thead>
+						  <tr>
+						    <th>Player Name</th>
+						    <th>Points</th>
+						    <th>MOV</th>
+						    <th>Games Played</th>
+						  </tr>
+						</thead>
+						<tbody>
+							{playerScores}
+						</tbody>
+					</table>
+				</div>
+			</section>
 		);
 	}
 }

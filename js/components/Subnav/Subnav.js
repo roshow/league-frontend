@@ -7,14 +7,14 @@ export default class Subnav extends React.Component {
 	}
 
 	render () {
-		let { rankings, matches, division='argent', week, players, season=1 } = this.props;
+		let { division, week, season } = this.props;
 		season = parseInt(season, 10);
 		week = parseInt(week, 10);
 
 
     const divisionEls = ['argent', 'ultima'].map( div => {
       let classes = ( div === division) ? "active" : "";
-      return <li className={classes} key={div}><Link to={`/rankings/${div}/season/${season}`}>{div.toUpperCase()}</Link></li>
+      return <li className={classes} key={div}><Link to={`/rankings/${div}/season/${season}`} style={{textTransform:'capitalize'}}>{div}</Link></li>
     });
 
 		return (
