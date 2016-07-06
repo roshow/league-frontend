@@ -13,14 +13,24 @@ export default class MatchSection extends React.Component {
     const matchScores = ( matches || MatchStore.getMatches() ).map( match => (
       <ul className="list-group" key={match.match_id}>
         {
-          match.players.map( ({ name, destroyed }) => {
+          match.players.map( ({ name, destroyed, list_link }) => {
             const player = players[name];
             const printname = player ? player.print_name : name;
             let _style = {};
-            if (match.winner === name) {
-              _style.fontWeight = 'bold';
+            let list = '';
+            if (match.played) {
+              if (match.winner === name) {
+                _style.fontWeight = 'bold';
+              }
+              list = list_link === '' ? ( 'List Missing' ) : ( <a href={list_link}>List</a> );
+              list = <span style={{fontWeight:'normal'}}>({list})</span>
             }
-            return ( <li className="list-group-item" key={name} style={_style}><span>{printname}</span><span className="pull-right">{destroyed}</span></li> );
+            return (
+              <li className="list-group-item" key={name} style={_style}>
+                <span>{printname} {list}</span>
+                <span className="pull-right">{destroyed}</span>
+              </li>
+            );
           })
         }
       </ul>
