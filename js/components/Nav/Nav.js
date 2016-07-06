@@ -8,21 +8,22 @@ export default class Nav extends React.Component {
 	}
 
 	render () {
-		let { rankings, matches, division, week, players, season } = this.props;
+		let { division, week, season } = this.props;
 		season = parseInt(season, 10);
 		week = parseInt(week, 10);
     const seasonEls = [1, 2].map( seasonNo => {
-      let classes = ( seasonNo === season) ? "active" : "";
-      let targetUrl = week ? `/schedule/${division}/season/${seasonNo}/week/${week}` : `/rankings/${division}/season/${seasonNo}`;
+      const classes = ( seasonNo === season) ? "active" : "";
+      const targetUrl = week ? `/schedule/${division}/season/${seasonNo}/week/${week}` : `/rankings/${division || 'argent'}/season/${seasonNo || 2}`;
       return <li className={classes} key={'sN' + seasonNo}><Link to={targetUrl}>Season {seasonNo}</Link></li>
     });
+    const playersButtonClass = !season ? 'active' : '';
 
 		return (
 			<nav>
 				<div className="container">
 	        <ul className="nav nav-pills pull-left">
 	          {seasonEls}
-	          <li><Link to="/players">PLAYERS</Link></li>
+	          <li className={playersButtonClass}><Link to="/players">Players</Link></li>
 	        </ul>
 	        <a className="btn btn-default active pull-right" href="https://docs.google.com/document/d/1-AXYE46sRZqTRRYZujhrJ-BvSg5bcNnMH0RCEBgUG7o/edit?usp=sharing" role="button">League Info</a>
 	      </div>

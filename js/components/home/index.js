@@ -19,8 +19,8 @@ export default class HomeIndex extends React.Component {
         this.setState(this.getState());
       };
       this.state = Object.assign({
-        division: division || 'argent',
-        season: parseInt(season || 2, 10),
+        division: division,
+        season: parseInt(season, 10),
         week: parseInt(week, 10),
         players: {},
       }, this.getState());
