@@ -5,8 +5,8 @@ import React from 'react';
 import request from 'request';
 import routes from './routes';
 import SHARED from './js/sharedConstants';
-import { renderToString } from 'react-dom/server'
-import { match, RouterContext } from 'react-router'
+import { renderToString } from 'react-dom/server';
+import { match, RouterContext } from 'react-router';
 
 const APIURL = SHARED.APIURL;
 
@@ -22,16 +22,16 @@ app.use(serveStatic('public')); // serve public files
 app.use(function (req, res, next) {
   match({ routes, location: req.url }, (error, redirectLocation, renderProps) => {
     if (error) {
-      res.status(500).send(error.message)
+      res.status(500).send(error.message);
     }
     else if (redirectLocation) {
-      res.redirect(302, redirectLocation.pathname + redirectLocation.search)
+      res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     }
     else if (renderProps) {
       request(`${APIURL}/api/players`, function (error, response, body) {
         res.render('layout', {
           reactHtml: renderToString(<RouterContext {...renderProps} />),
-          players: body
+          players: body,
         });
       });
     } else {
