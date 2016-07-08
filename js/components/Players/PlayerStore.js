@@ -4,15 +4,7 @@ import EventEmitter from 'events';
 
 let window = window;
 let players = window ? window.PLAYERS : {};
-let currentPlayer = {
-  "name": "marekmarcinkiewicz",
-  "matches": [],
-  "division": {
-    "1": "ultima",
-    "2": "ultima"
-  },
-  "print_name": "Marek Marcinkiewicz"
-};
+let currentPlayer = {};
 
 var PlayerStore = Object.assign({}, EventEmitter.prototype, {
 
@@ -21,15 +13,28 @@ var PlayerStore = Object.assign({}, EventEmitter.prototype, {
   getCurrentPlayer: () => currentPlayer,
 
   emitChange () {
-    this.emit(CHANGE_EVENT);
+    this.emit(WingRankerConstants.CHANGE_EVENT);
   },
 
   addChangeListener (callback) {
-    this.on(CHANGE_EVENT, callback);
+    this.on(WingRankerConstants.CHANGE_EVENT, callback);
   },
 
   removeChangeListener (callback) {
     this.removeListener(WingRankerConstants.CHANGE_EVENT, callback);
+  }
+
+});
+
+PlayerStore.dispatchToken = AppDispatcher.register( action => {
+
+  switch(action.type) {
+    case WingRankerConstants.PLAYER_LOADED:
+
+      currentPlayer = action.player;
+      PlayerStore.emitChange();
+
+      break;
   }
 
 });

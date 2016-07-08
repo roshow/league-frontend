@@ -1,6 +1,7 @@
 import React from 'react';
 import ScoreStore from './../../stores/ScoreStore';
 import ScoreActions from './../../actions/ScoreActions';
+import PlayerActions from './../../actions/PlayerActions';
 import MatchStore from './../../stores/MatchStore';
 import MatchActions from './../../actions/MatchActions';
 import Banner from './../Banner/Banner';
@@ -48,25 +49,29 @@ export default class HomeIndex extends React.Component {
   }
 
   componentDidMount () {
-    const { division, week, season } = this.state;
-    let playername;
+    const { props: { params: { division, week, season, playername } } } = this;
     this.setState({ players: window.PLAYERS });
     ScoreStore.addChangeListener(this._onChange);
     MatchStore.addChangeListener(this._onChange);
+    PlayerStore.addChangeListener(this._onChange);
     this.refreshData(division, season, week, playername);
   }
-  componentWillReceiveProps ({ params: { division, week, season, playername } }) {   
+  componentWillReceiveProps ({ params: { division, week, season, playername } }) {
     this.setState({
       division,
       week,
       season,
     });
+
     this.refreshData(division, season, week, playername);
     
   }
 
   refreshData (division, season, week, playername) {
-    if (week >= 0) { 
+    if (playername) {
+      PlayerActions.updateCurrentPlayer(playername);
+    }
+    else if (week >= 0) { 
       MatchActions.updateMatches(division, week, season);
     }
     else if (season) {
@@ -76,5 +81,6 @@ export default class HomeIndex extends React.Component {
   componentWillUnmount () {
     ScoreStore.removeChangeListener(this._onChange);  
     MatchStore.removeChangeListener(this._onChange);
+    PlayerStore.removeChangeListener(this._onChange);
   }
 }
