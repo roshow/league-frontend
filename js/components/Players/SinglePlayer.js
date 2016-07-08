@@ -10,21 +10,20 @@ export default class SinglePlayerSection extends React.Component {
 
 	render () {
 		const { player, players } = this.props;
-		console.log(player);
 		const seasonsEls = !player.seasons ? '' : Object.keys(player.seasons).reverse().map( season => {
 			const playerSeason = player.seasons[season];
 			return (
 				<section key={`singlePlayersSeasons.${season}`}>
-					<h4>Season {season}</h4>
-					<h5>Division: {playerSeason.division}</h5>
-					<h5>Matches:</h5>
+					<h3><span className="label label-default">Season {season}</span></h3>
+					<h4>Division: <span style={{textTransform:'capitalize'}} className="label label-default">{playerSeason.division}</span></h4>
+					<h4 >Matches:</h4>
 					<Matches matches={playerSeason.matches} players={players} />
 				</section>
 			);
 		});
 		return (
 			<div className="container">
-				<h3>{ player.print_name }</h3>
+				<h2>{ player.print_name }</h2>
 				{seasonsEls}
 			</div>
 		);
