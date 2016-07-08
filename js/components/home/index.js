@@ -1,6 +1,7 @@
 import React from 'react';
 import ScoreStore from './../../stores/ScoreStore';
 import ScoreActions from './../../actions/ScoreActions';
+import PlayerActions from './../../actions/PlayerActions';
 import MatchStore from './../../stores/MatchStore';
 import MatchActions from './../../actions/MatchActions';
 import Banner from './../Banner/Banner';
@@ -12,15 +13,6 @@ import WingRankerConstants from './../../constants/WingRankerConstants';
 import { Link } from 'react-router';
 
 
-function getStateFromStores() {
-  return {
-    rankings: ScoreStore.getRankings(),
-    matches: MatchStore.getMatches()
-  };
-}
-
-
-
 export default class HomeIndex extends React.Component {
   constructor ({ params: { division, week, season} }) {
       super();
@@ -28,8 +20,8 @@ export default class HomeIndex extends React.Component {
         this.setState(this.getState());
       };
       this.state = Object.assign({
-        division: division || 'argent',
-        season: parseInt(season || 2, 10),
+        division: division,
+        season: parseInt(season, 10),
         week: parseInt(week, 10),
         players: {},
       }, this.getState());
@@ -39,52 +31,56 @@ export default class HomeIndex extends React.Component {
     return {
       rankings: ScoreStore.getRankings(),
       matches: MatchStore.getMatches(),
+      player: PlayerStore.getCurrentPlayer(), 
     };
 
   }
   render () {
     const { rankings, matches, division, week, players, season } = this.state;
-    let mainContainerClasses ='container';
-    mainContainerClasses += (week ? ' matches-container' : '');
     return (
       <section>
         <Banner season={season}/>
         <Nav {...this.state} />
-        <div className={mainContainerClasses}>
-          { React.cloneElement(this.props.children, { players: players }) }
-        </div>
+        <section>
+          { React.cloneElement(this.props.children, { ...this.state }) }
+        </section>
       </section>
     )
   }
 
   componentDidMount () {
-    let { division, week, season } = this.state;
-    this.state.players = window.PLAYERS;
+    const { props: { params: { division, week, season, playername } } } = this;
+    this.setState({ players: window.PLAYERS });
     ScoreStore.addChangeListener(this._onChange);
     MatchStore.addChangeListener(this._onChange);
-    if (week >= 0) { 
-      MatchActions.updateMatches(division, week, season);
-    }
-    else {
-      ScoreActions.loadRankings(division, season);
-    }
+    PlayerStore.addChangeListener(this._onChange);
+    this.refreshData(division, season, week, playername);
   }
-  componentWillReceiveProps ({ params: { division, week, season } }) {
+  componentWillReceiveProps ({ params: { division, week, season, playername } }) {
     this.setState({
       division,
       week,
       season,
     });
-    if (week >= 0) { 
+
+    this.refreshData(division, season, week, playername);
+    
+  }
+
+  refreshData (division, season, week, playername) {
+    if (playername) {
+      PlayerActions.updateCurrentPlayer(playername);
+    }
+    else if (week >= 0) { 
       MatchActions.updateMatches(division, week, season);
     }
-    else {
+    else if (season) {
       ScoreActions.loadRankings(division, season);
     }
   }
-
   componentWillUnmount () {
     ScoreStore.removeChangeListener(this._onChange);  
     MatchStore.removeChangeListener(this._onChange);
+    PlayerStore.removeChangeListener(this._onChange);
   }
 }

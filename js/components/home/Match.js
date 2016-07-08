@@ -9,12 +9,13 @@ export default class MatchSection extends React.Component {
 	}
 
 	render () {
-    const { players } = this.props;
-    const matchScores = MatchStore.getMatches().map( match => (
+    const { players={}, matches } = this.props;
+    const matchScores = ( matches || MatchStore.getMatches() ).map( match => (
       <ul className="list-group" key={match.match_id}>
         {
           match.players.map( ({ name, destroyed, list_link }) => {
-            let player = players[name];
+            const player = players[name];
+            const printname = player ? player.print_name : name;
             let _style = {};
             let list = '';
             if (match.played) {
@@ -26,7 +27,7 @@ export default class MatchSection extends React.Component {
             }
             return (
               <li className="list-group-item" key={name} style={_style}>
-                <span>{player.print_name} {list}</span>
+                <span>{printname} {list}</span>
                 <span className="pull-right">{destroyed}</span>
               </li>
             );
@@ -35,6 +36,6 @@ export default class MatchSection extends React.Component {
       </ul>
     ));
 
-    return (<div>{matchScores}</div>);
+    return (<div className="container matches-container">{matchScores}</div>);
   }
 }
