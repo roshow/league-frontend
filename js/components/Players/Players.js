@@ -15,7 +15,7 @@ export default class PlayersSection extends React.Component {
 			textAlign: 'center'
 		};
 		const playersLi = Object.keys(players).sort().map( (key) => {
-			return <li className="list-group-item" key={`players-${key}`} ><Link to="/">{players[key].print_name}</Link></li>
+			return <li className="list-group-item" key={`players-${key}`} ><Link to={`/player/${players[key].name}`}>{players[key].print_name}</Link></li>
 		});
 		return (
 			<div className="container matches-container">

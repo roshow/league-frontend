@@ -29,7 +29,8 @@ export default class HomeIndex extends React.Component {
   getState () {
     return {
       rankings: ScoreStore.getRankings(),
-      matches: MatchStore.getMatches()
+      matches: MatchStore.getMatches(),
+      player: PlayerStore.getCurrentPlayer(), 
     };
 
   }
@@ -47,23 +48,24 @@ export default class HomeIndex extends React.Component {
   }
 
   componentDidMount () {
-    let { division, week, season } = this.state;
+    const { division, week, season } = this.state;
+    let playername;
     this.setState({ players: window.PLAYERS });
     ScoreStore.addChangeListener(this._onChange);
     MatchStore.addChangeListener(this._onChange);
-    if (week >= 0) { 
-      MatchActions.updateMatches(division, week, season);
-    }
-    else if (season) {
-      ScoreActions.loadRankings(division, season);
-    }
+    this.refreshData(division, season, week, playername);
   }
-  componentWillReceiveProps ({ params: { division, week, season } }) {   
+  componentWillReceiveProps ({ params: { division, week, season, playername } }) {   
     this.setState({
       division,
       week,
       season,
     });
+    this.refreshData(division, season, week, playername);
+    
+  }
+
+  refreshData (division, season, week, playername) {
     if (week >= 0) { 
       MatchActions.updateMatches(division, week, season);
     }
@@ -71,7 +73,6 @@ export default class HomeIndex extends React.Component {
       ScoreActions.loadRankings(division, season);
     }
   }
-
   componentWillUnmount () {
     ScoreStore.removeChangeListener(this._onChange);  
     MatchStore.removeChangeListener(this._onChange);
