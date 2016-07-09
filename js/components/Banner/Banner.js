@@ -6,19 +6,14 @@ export default class Banner extends React.Component {
 	}
 
 	render () {
-		const season = this.props.season;
-		let imgUrl;
-		switch (season) {
-			case 2:
-			case "2":
-				imgUrl = "/images/nycxleague_banner_2_750.jpg";
-				break;
-			default:
-				imgUrl = "/images/nycxleague_banner_750.jpg";
-				break;
-		}
+		const imgUrl =`/images/nycxleague_banner_${this.props.season || 1}.jpg`;
+		const titleStyle = {
+			fontFamily: 'Impact, Charcoal, sans-serif',
+			marginTop: '10px',
+		};
 		return (
 			<div className="container">
+					<h3 style={titleStyle}>NYC X-WING LEAGUE</h3>
           <img className="header-image" src={imgUrl} />
        </div>
 		)
