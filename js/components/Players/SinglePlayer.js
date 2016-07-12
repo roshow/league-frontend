@@ -14,7 +14,7 @@ export default class SinglePlayerSection extends React.Component {
 			const playerSeason = player.seasons[season];
 			return (
 				<section key={`singlePlayersSeasons.${season}`}>
-					<h3><span className="label label-default">Season {season}</span></h3>
+					<h3>Season <span className="label label-default">{season}</span></h3>
 					<h4>Division: <span style={{textTransform:'capitalize'}} className="label label-default">{playerSeason.division}</span></h4>
 					<h4 >Matches:</h4>
 					<Matches matches={playerSeason.matches} players={players} />

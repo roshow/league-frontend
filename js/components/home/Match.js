@@ -18,12 +18,20 @@ export default class MatchSection extends React.Component {
             const printname = player ? player.print_name : name;
             let _style = {};
             let list = '';
-            if (match.played) {
+            let listContent = '';
+            if (match.gamePlayed) {
+              console.log(match.played);
               if (match.winner === name) {
                 _style.fontWeight = 'bold';
+                
               }
-              list = list_link === '' ? ( 'List Missing' ) : ( <a href={list_link}>List</a> );
-              list = <span style={{fontWeight:'normal'}}>({list})</span>
+              if (match.gamePlayed === 2) {
+                listContent = (match.winner === name) ? 'bye' : 'forfeit';
+              }
+              else {
+                listContent = list_link === '' ? ( 'List Missing' ) : ( <a href={list_link}>List</a> );
+              }
+              list = <span style={{fontWeight:'normal'}}>({listContent})</span>
             }
             return (
               <li className="list-group-item" key={name} style={_style}>
