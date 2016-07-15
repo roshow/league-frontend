@@ -31,7 +31,8 @@ export default class HomeIndex extends React.Component {
     return {
       rankings: ScoreStore.getRankings(),
       matches: MatchStore.getMatches(),
-      player: PlayerStore.getCurrentPlayer(), 
+      player: PlayerStore.getCurrentPlayer(),
+      players: PlayerStore.getAll(), 
     };
 
   }
@@ -50,10 +51,10 @@ export default class HomeIndex extends React.Component {
 
   componentDidMount () {
     const { props: { params: { division, week, season, playername } } } = this;
-    this.setState({ players: window.PLAYERS });
     ScoreStore.addChangeListener(this._onChange);
     MatchStore.addChangeListener(this._onChange);
     PlayerStore.addChangeListener(this._onChange);
+    PlayerActions.getPlayers();
     this.refreshData(division, season, week, playername);
   }
   componentWillReceiveProps ({ params: { division, week, season, playername } }) {

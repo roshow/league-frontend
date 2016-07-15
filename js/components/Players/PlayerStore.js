@@ -3,7 +3,7 @@ import AppDispatcher from './../../dispatcher/AppDispatcher';
 import EventEmitter from 'events';
 
 let window = window;
-let players = window ? window.PLAYERS : {};
+let players = {};
 let currentPlayer = {};
 
 var PlayerStore = Object.assign({}, EventEmitter.prototype, {
@@ -32,6 +32,17 @@ PlayerStore.dispatchToken = AppDispatcher.register( action => {
     case WingRankerConstants.PLAYER_LOADED:
 
       currentPlayer = action.player;
+      PlayerStore.emitChange();
+
+      break;
+    case WingRankerConstants.ALL_PLAYERS_LOADED:
+      let playersArr = action.players;
+      var playersObj = {};
+      for (var i = playersArr.length; i-- ;) {
+        playersObj[playersArr[i].name] = playersArr[i];
+      }
+      console.log(playersObj);
+      players = playersObj;
       PlayerStore.emitChange();
 
       break;

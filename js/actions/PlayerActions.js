@@ -3,16 +3,23 @@ import WingRankerConstants from './../constants/WingRankerConstants';
 import Utils from './../utils/EveryoneUtils';
 import WingRankerUtils from './../utils/WingRankerUtils';
 
+function dispatchAllPlayersLoaded (players) {
+	AppDispatcher.dispatch({
+		type: WingRankerConstants.ALL_PLAYERS_LOADED,
+		players,
+	});
+}
 
 function getPlayers () {
-	let players = sessionStorage.getItem('players');
+	const players = WingRankerUtils.getSessionCache('players');
 	if (!players) {
 		Utils.getJson(`${WingRankerConstants.API_URL}/api/players`).then(function (response) {
-			dispatchPlayersLoaded(response);
+			WingRankerUtils.setSessionCache('players');
+			dispatchAllPlayersLoaded(response);
 		});
 	}
 	else {
-		dispatchPlayersLoaded(players);
+		dispatchAllPlayersLoaded(players);
 	}
 }
 

@@ -11,9 +11,10 @@ export default class RankingsSection extends React.Component {
 	render () {
 		const { players } = this.props;
 		const playerScores = ScoreStore.getRankings().map( (player) => {
+			const printname = players[player.name] ? players[player.name].print_name : player.name;
 			return (
 			  <tr key={player.name}>
-			    <td>{players[player.name].print_name}</td>
+			    <td>{printname}</td>
 			    <td>{player.lp}</td>
 			    <td>{player.mov}</td>
 			    <td>{player.games_played}</td>

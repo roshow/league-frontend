@@ -2,11 +2,11 @@ import express from 'express';
 import hbs from 'express-handlebars';
 import serveStatic from 'serve-static';
 import React from 'react';
+import { renderToString } from 'react-dom/server';
+import { match, RouterContext } from 'react-router';
 import request from 'request';
 import routes from './routes';
 import SHARED from './js/sharedConstants';
-import { renderToString } from 'react-dom/server';
-import { match, RouterContext } from 'react-router';
 
 const APIURL = SHARED.APIURL;
 
@@ -28,11 +28,8 @@ app.use(function (req, res, next) {
       res.redirect(302, redirectLocation.pathname + redirectLocation.search);
     }
     else if (renderProps) {
-      request(`${APIURL}/api/players`, function (error, response, body) {
-        res.render('layout', {
-          reactHtml: renderToString(<RouterContext {...renderProps} />),
-          players: body,
-        });
+      res.render('layout', {
+        reactHtml: renderToString(<RouterContext {...renderProps} />),
       });
     } else {
       res.status(404).send('Not found')
