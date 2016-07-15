@@ -2,11 +2,11 @@ import express from 'express';
 import hbs from 'express-handlebars';
 import serveStatic from 'serve-static';
 import React from 'react';
+import { renderToString } from 'react-dom/server';
+import { match, RouterContext } from 'react-router';
 import request from 'request';
 import routes from './routes';
 import SHARED from './js/sharedConstants';
-import { renderToString } from 'react-dom/server';
-import { match, RouterContext } from 'react-router';
 
 const APIURL = SHARED.APIURL;
 
