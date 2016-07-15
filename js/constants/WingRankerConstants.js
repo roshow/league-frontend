@@ -12,6 +12,7 @@ const wingranker_constants = Object.assign({
 	  MATCHES_LOADED: null,
 	  RANKINGS_CHANGED: null,
 	  PLAYER_LOADED: null,
+	  ALL_PLAYERS_LOADED: null,
 }));
 
 export default wingranker_constants;
